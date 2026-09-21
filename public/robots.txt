@@ -1,4 +1,2 @@
 User-agent: *
-Allow: /
-
-Sitemap: https://www.jathingold.com/sitemap-index.xml
+Disallow: /
