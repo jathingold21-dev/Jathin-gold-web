@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import { company } from '../data/company';
+import { getRates } from '../lib/rates';
+import { formatInrCompact, formatTime } from '../lib/format';
+import { breadcrumbJsonLd } from '../lib/seo';
+
+const rates = await getRates();
+---
+
+<Base
+  title={`Platinum Rate Today in ${company.region}`}
+  description={`Indicative platinum rate ${formatInrCompact(rates.platinum.perGram)} per gram in ${company.region}.`}
+  path="/platinum-rate-today"
+  jsonLd={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Platinum rate today', path: '/platinum-rate-today' }])}
+>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="/">Home</a> / Platinum rate today</p>
+    <h1>Platinum rate today</h1>
+    <p class="lede">Indicative per gram. Snapshot {formatTime(rates.fetchedAt)} IST. PT950 is priced from this fine rate after the XRF reading.</p>
+  </div>
+  <section class="band">
+    <div class="wrap">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Weight</th><th>Indicative</th></tr></thead>
+          <tbody>
+            <tr><td>1 g</td><td class="num" data-k="platinum">{formatInrCompact(rates.platinum.perGram)}</td></tr>
+            <tr><td>10 g</td><td class="num">{formatInrCompact(rates.platinum.perGram * 10)}</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><a href="/sell-platinum">Sell platinum</a></p>
+    </div>
+  </section>
+</Base>

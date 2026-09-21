@@ -1,0 +1,26 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import { breadcrumbJsonLd } from '../lib/seo';
+import xrf from '../assets/xrf-test.jpg';
+---
+
+<Base
+  title="How Selling Gold Works"
+  description="Six steps at the Jathin Gold desk: ID, weigh, XRF, written quote, KYC, payment. You can refuse the quote."
+  path="/how-it-works"
+  jsonLd={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'How it works', path: '/how-it-works' }])}
+>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="/">Home</a> / How it works</p>
+    <h1>Nothing leaves the counter until you say yes</h1>
+    <p class="lede">The process is short on purpose. If a buyer needs your gold in another room “for a better machine,” walk out.</p>
+  </div>
+  <section class="band band-ticket">
+    <div class="wrap split split-2">
+      <ProcessSteps />
+      <Image src={xrf} alt="XRF purity test performed at the evaluation desk" widths={[800]} sizes="(max-width: 880px) 100vw, 50vw" />
+    </div>
+  </section>
+</Base>

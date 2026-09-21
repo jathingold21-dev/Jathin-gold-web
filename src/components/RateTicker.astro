@@ -1,0 +1,17 @@
+---
+import type { Rates } from '../lib/rates';
+import { formatInrCompact } from '../lib/format';
+
+type Props = { rates: Rates };
+const { rates } = Astro.props;
+---
+
+<div class="ticker" data-rates-root>
+  <div class="wrap ticker-row">
+    <span>22K gold <b data-k="gold22">{formatInrCompact(rates.gold.perGram22k)}</b>/g</span>
+    <span>24K gold <b data-k="gold24">{formatInrCompact(rates.gold.perGram24k)}</b>/g</span>
+    <span>Silver <b data-k="silver">{formatInrCompact(rates.silver.perGram)}</b>/g</span>
+    <span>Platinum <b data-k="platinum">{formatInrCompact(rates.platinum.perGram)}</b>/g</span>
+    <span class="notice">Indicative · <a href="/gold-rate-today">full table</a></span>
+  </div>
+</div>

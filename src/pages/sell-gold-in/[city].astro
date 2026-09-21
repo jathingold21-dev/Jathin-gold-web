@@ -1,0 +1,63 @@
+---
+import Base from '../../layouts/Base.astro';
+import BranchCard from '../../components/BranchCard.astro';
+import FaqList from '../../components/FaqList.astro';
+import QuoteForm from '../../components/QuoteForm.astro';
+import { cities, getCity } from '../../data/branches';
+import { homeFaqs } from '../../data/faqs';
+import { breadcrumbJsonLd, faqJsonLd, serviceJsonLd } from '../../lib/seo';
+
+export function getStaticPaths() {
+  return cities.map((c) => ({ params: { city: c.slug } }));
+}
+
+const city = getCity(Astro.params.city!);
+if (!city) throw new Error('Unknown city');
+const faqs = [
+  {
+    q: `Where can I sell gold in ${city.name}?`,
+    a: `At Jathin Gold. We have ${city.branches.length} desk${city.branches.length > 1 ? 's' : ''} in ${city.name}. Evaluation is in front of you; payment is the same visit.`,
+  },
+  ...homeFaqs.filter((f) => !f.q.includes('Hyderabad')),
+];
+---
+
+<Base
+  title={`Sell Gold in ${city.name} | Cash for Gold`}
+  description={`Sell gold, silver, and platinum in ${city.name}. Jathin Gold branches with XRF testing and same-visit payment. We do not sell jewellery.`}
+  path={`/sell-gold-in/${city.slug}`}
+  jsonLd={[
+    serviceJsonLd({
+      name: `Sell gold in ${city.name}`,
+      path: `/sell-gold-in/${city.slug}`,
+      description: `Dedicated gold buyer in ${city.name}.`,
+    }),
+    faqJsonLd(faqs),
+    breadcrumbJsonLd([
+      { name: 'Home', path: '/' },
+      { name: `Sell gold in ${city.name}`, path: `/sell-gold-in/${city.slug}` },
+    ]),
+  ]}
+>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="/">Home</a> / Sell gold in {city.name}</p>
+    <h1>Sell gold in {city.name}</h1>
+    <p class="lede">
+      If you are searching for a gold buyer in {city.name} — cash for old jewellery, coins, or silver — Jathin Gold is a buying desk, not a jewellery store. Walk into any of the branches below with ID.
+    </p>
+  </div>
+  <section class="band band-ticket">
+    <div class="wrap split split-3">
+      {city.branches.map((b) => <BranchCard branch={b} />)}
+    </div>
+  </section>
+  <section class="band band-ticket">
+    <div class="wrap split split-2">
+      <div>
+        <h2>Local questions</h2>
+        <FaqList items={faqs} />
+      </div>
+      <QuoteForm />
+    </div>
+  </section>
+</Base>

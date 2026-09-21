@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { getRates } from '../lib/rates';
+import { formatInrCompact } from '../lib/format';
+import { breadcrumbJsonLd, serviceJsonLd } from '../lib/seo';
+
+const rates = await getRates();
+const ten = formatInrCompact(10 * rates.gold.perGram24k);
+---
+
+<Base
+  title="Sell Gold Coins"
+  description="Sell 24K gold coins and biscuits. Indicative 10g around the live 24K rate. Fast XRF, almost no stone deduction."
+  path="/sell-gold-coins"
+  jsonLd={[
+    serviceJsonLd({ name: 'Sell gold coins', path: '/sell-gold-coins', description: 'Buying gold coins and biscuits for cash.' }),
+    breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Gold coins', path: '/sell-gold-coins' }]),
+  ]}
+>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="/">Home</a> / Gold coins</p>
+    <h1>Gold coins are the simplest sale</h1>
+    <p class="lede">
+      A 10 gram 24K coin has no making charge to argue about and almost no solder. Indicative 10g at today’s 24K figure is <strong>{ten}</strong>. MMTC, banks, and private mints are all tested — the stamp is a hint, the gun is the proof.
+    </p>
+  </div>
+  <section class="band band-ticket">
+    <div class="wrap split split-2">
+      <div class="prose">
+        <p>Bring the coin in its packaging if you still have it. It is not required. Bars and biscuits follow the same protocol.</p>
+        <p><a href="/gold-rate-today">Per-gram and 10g table</a> · <a href="/calculator">Calculator</a></p>
+      </div>
+      <QuoteForm />
+    </div>
+  </section>
+</Base>

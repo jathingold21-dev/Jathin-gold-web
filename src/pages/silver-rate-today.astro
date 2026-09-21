@@ -1,0 +1,38 @@
+---
+import Base from '../layouts/Base.astro';
+import { company } from '../data/company';
+import { getRates } from '../lib/rates';
+import { formatInrCompact, formatTime } from '../lib/format';
+import { breadcrumbJsonLd } from '../lib/seo';
+
+const rates = await getRates();
+---
+
+<Base
+  title={`Silver Rate Today in ${company.region}`}
+  description={`Indicative silver rate ${formatInrCompact(rates.silver.perGram)} per gram in ${company.region}. Sell silver at Jathin Gold after XRF.`}
+  path="/silver-rate-today"
+  jsonLd={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Silver rate today', path: '/silver-rate-today' }])}
+>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="/">Home</a> / Silver rate today</p>
+    <h1>Silver rate today</h1>
+    <p class="lede">Indicative fine silver, per gram. Snapshot {formatTime(rates.fetchedAt)} IST.</p>
+  </div>
+  <section class="band">
+    <div class="wrap">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Weight</th><th>Indicative</th></tr></thead>
+          <tbody>
+            <tr><td>1 g</td><td class="num" data-k="silver">{formatInrCompact(rates.silver.perGram)}</td></tr>
+            <tr><td>10 g</td><td class="num">{formatInrCompact(rates.silver.perGram * 10)}</td></tr>
+            <tr><td>100 g</td><td class="num">{formatInrCompact(rates.silver.perGram * 100)}</td></tr>
+            <tr><td>1 kg</td><td class="num">{formatInrCompact(rates.silver.perGram * 1000)}</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><a href="/sell-silver">Sell silver</a> · <a href="/calculator">Calculator</a></p>
+    </div>
+  </section>
+</Base>

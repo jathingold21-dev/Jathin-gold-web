@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import BranchCard from '../../components/BranchCard.astro';
+import { company } from '../../data/company';
+import { branches } from '../../data/branches';
+import { allBranchesJsonLd, breadcrumbJsonLd } from '../../lib/seo';
+---
+
+<Base
+  title={`Gold Buying Branches in ${company.region}`}
+  description={`Visit a Jathin Gold branch in ${company.region} to sell gold, silver, or platinum. Open 7 days.`}
+  path="/branches"
+  jsonLd={[allBranchesJsonLd(), breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Branches', path: '/branches' }])]}
+>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="/">Home</a> / Branches</p>
+    <h1>Branches in {company.region}</h1>
+    <p class="lede">{company.hoursLabel}. Same testing protocol at every desk. Also see <a href={`/sell-gold-in/${branches[0].citySlug}`}>sell gold in {branches[0].city}</a>.</p>
+  </div>
+  <section class="band band-ticket">
+    <div class="wrap split split-3">
+      {branches.map((b) => <BranchCard branch={b} />)}
+    </div>
+  </section>
+</Base>

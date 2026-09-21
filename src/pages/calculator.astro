@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import SellDesk from '../components/SellDesk.astro';
+import { getRates } from '../lib/rates';
+import { breadcrumbJsonLd } from '../lib/seo';
+
+const rates = await getRates();
+---
+
+<Base
+  title="Gold Selling Calculator"
+  description="Estimate what Jathin Gold might pay: live indicative rate × grams × purity. Final payout after XRF at the branch."
+  path="/calculator"
+  jsonLd={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Calculator', path: '/calculator' }])}
+>
+  <section class="sell-stage is-solo">
+    <div class="wrap">
+      <p class="crumbs"><a href="/">Home</a> / Calculator</p>
+      <SellDesk metal="gold" rates={rates} />
+      <nav class="sell-alts" aria-label="Other metals">
+        <a href="/sell-gold">Gold</a>
+        <a href="/sell-silver">Silver</a>
+        <a href="/sell-platinum">Platinum</a>
+      </nav>
+    </div>
+  </section>
+</Base>

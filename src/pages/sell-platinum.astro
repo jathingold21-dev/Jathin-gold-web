@@ -1,0 +1,118 @@
+---
+import Base from '../layouts/Base.astro';
+import SellDesk from '../components/SellDesk.astro';
+import FaqList from '../components/FaqList.astro';
+import { company, telUrl, whatsappUrl } from '../data/company';
+import { platinumFaqs } from '../data/faqs';
+import { getRates } from '../lib/rates';
+import { formatInrCompact } from '../lib/format';
+import { breadcrumbJsonLd, faqJsonLd, serviceJsonLd } from '../lib/seo';
+
+const rates = await getRates();
+const wa = whatsappUrl('Hello Jathin Gold, I want to sell platinum in Hyderabad.');
+---
+
+<Base
+  title={`Sell Platinum in ${company.region}`}
+  description={`Sell PT950 platinum jewellery in ${company.region}. Live indicative ${formatInrCompact(rates.platinum.perGram)}/g. Tested and paid as platinum, not white gold.`}
+  path="/sell-platinum"
+  jsonLd={[
+    serviceJsonLd({ name: 'Sell platinum for cash', path: '/sell-platinum', description: 'Platinum buying with XRF testing.' }),
+    faqJsonLd(platinumFaqs),
+    breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Sell platinum', path: '/sell-platinum' }]),
+  ]}
+>
+  <section class="sell-stage">
+    <div class="wrap">
+      <p class="crumbs"><a href="/">Home</a> / Sell platinum</p>
+      <div class="sell-hero">
+        <div class="sell-copy">
+          <p class="kicker">Platinum buyer in {company.region}</p>
+          <h1>Sell platinum — not white gold</h1>
+          <p class="lede">
+            PT950 jewellery and coins, tested as platinum. White gold is gold. We split mixed pieces and pay each metal
+            on its own.
+          </p>
+          <ul class="sell-points">
+            <li>XRF that tells platinum from white gold</li>
+            <li>PT950, PT900, and PT850 lots</li>
+            <li>Gold settings paid as gold, not guessed</li>
+            <li>Same written-quote and same-visit pay rule</li>
+          </ul>
+          <p class="sell-rate-chip">
+            Today’s platinum <strong data-k="platinum">{formatInrCompact(rates.platinum.perGram)}</strong>/g
+            <span>· indicative</span>
+          </p>
+          <p class="sell-cta">
+            <a class="btn btn-seal" href={telUrl}>Call {company.phoneShort}</a>
+            <a class="btn btn-ghost" href={wa}>WhatsApp</a>
+          </p>
+        </div>
+        <aside class="sell-card-col">
+          <SellDesk metal="platinum" rates={rates} />
+          <nav class="sell-alts" aria-label="Other metals">
+            <a href="/sell-gold">Gold</a>
+            <a href="/sell-silver">Silver</a>
+            <a href="/sell-platinum" aria-current="page">Platinum</a>
+          </nav>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <h2>How we buy platinum in {company.region}</h2>
+      <p class="intro">
+        Fewer Indian desks handle platinum well. We do, at every branch, with the same protocol as gold. Large or unusual
+        lots: call ahead so the right person is at the counter.
+      </p>
+      <div class="sell-how">
+        <article>
+          <span>01</span>
+          <h3>Walk in with the piece and ID</h3>
+          <p>Jewellery, coins, or mixed lots. Tell us if you think it is platinum — we still test. White gold is a different metal.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>XRF as platinum</h3>
+          <p>The screen has to read platinum. A white colour is not enough. Gold-plated or white-gold pieces are priced as gold.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Split mixed jewellery</h3>
+          <p>Gold settings are paid as gold. Platinum as platinum. Stones returned or deducted. The split is written on the quote.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Quote, KYC, pay</h3>
+          <p>Same visit. Cash up to the legal cap, then UPI or transfer. Receipt shows metal, purity, and rate.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-ticket">
+    <div class="wrap sell-seo">
+      <div class="prose">
+        <h2>Platinum, not white gold</h2>
+        <p>
+          PT950 is typical in Indian platinum jewellery. We also buy PT900 and PT850. The live rate on this page is fine
+          platinum, indicative; the calculator applies the purity you pick. The branch quote follows the XRF reading.
+        </p>
+        <p>
+          White gold is gold with nickel or palladium — it is not platinum, and it is not paid at the platinum rate. If a
+          piece is mixed, we do not average the two metals. Each is weighed and priced on its own.
+        </p>
+        <p>
+          Walk in seven days, 9:30 AM – 7:00 PM, or call {company.phoneShort}. Also:
+          <a href="/platinum-rate-today">platinum rate today</a>.
+        </p>
+      </div>
+      <div>
+        <h2>Platinum questions</h2>
+        <FaqList items={platinumFaqs} />
+      </div>
+    </div>
+  </section>
+</Base>

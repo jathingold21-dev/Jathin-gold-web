@@ -1,0 +1,53 @@
+---
+import Base from '../../layouts/Base.astro';
+import QuoteForm from '../../components/QuoteForm.astro';
+import { company } from '../../data/company';
+import { branches, getBranch } from '../../data/branches';
+import { breadcrumbJsonLd, localBusinessJsonLd } from '../../lib/seo';
+
+export function getStaticPaths() {
+  return branches.map((b) => ({ params: { slug: b.slug } }));
+}
+
+const { slug } = Astro.params;
+const branch = getBranch(slug!);
+if (!branch) throw new Error('Unknown branch');
+---
+
+<Base
+  title={`${branch.name} Gold Buyer | ${company.name}`}
+  description={`Sell gold, silver, and platinum at Jathin Gold ${branch.name}, ${branch.city}. ${branch.address}. ${branch.hoursLabel}.`}
+  path={`/branches/${branch.slug}`}
+  jsonLd={[
+    localBusinessJsonLd(branch),
+    breadcrumbJsonLd([
+      { name: 'Home', path: '/' },
+      { name: 'Branches', path: '/branches' },
+      { name: branch.name, path: `/branches/${branch.slug}` },
+    ]),
+  ]}
+>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="/">Home</a> / <a href="/branches">Branches</a> / {branch.name}</p>
+    <h1>{company.name}, {branch.name}</h1>
+    <p class="lede">{branch.address}. {branch.hoursLabel}. {branch.note}</p>
+    <p>
+      <a class="btn btn-seal" href={branch.mapsUrl} rel="noopener">Open map</a>
+      <a class="btn btn-ghost" href={`tel:${branch.phone}`}>Call</a>
+    </p>
+  </div>
+  <section class="band band-ticket">
+    <div class="wrap split split-2">
+      <div class="prose">
+        <h2>What happens at this desk</h2>
+        <p>
+          This {branch.city} branch buys gold, silver, and platinum only. Walk in with ID. Weighing and XRF are done at the counter. Payment is the same visit.
+        </p>
+        <p>
+          Looking for other areas? <a href={`/sell-gold-in/${branch.citySlug}`}>Sell gold in {branch.city}</a> lists every desk in the city.
+        </p>
+      </div>
+      <QuoteForm />
+    </div>
+  </section>
+</Base>

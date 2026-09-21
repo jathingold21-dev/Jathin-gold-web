@@ -1,0 +1,145 @@
+---
+import type { Rates } from '../lib/rates';
+import { formatInrCompact } from '../lib/format';
+import { branches } from '../data/branches';
+import { company } from '../data/company';
+
+type Props = { rates: Rates };
+const { rates } = Astro.props;
+const branchCount = branches.length;
+---
+
+<section class="trust-market">
+  <div class="trust-strip">
+    <p class="trust-head"><span>Trusted gold buyers in Hyderabad</span></p>
+    <div class="wrap trust-grid">
+      <article class="trust-item">
+        <span class="trust-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3 14.4 8.2 20 9l-4 3.9.9 5.6L12 16.3 7.1 18.5 8 12.9 4 9l5.6-.8L12 3Z" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </span>
+        <h3>Dedicated buyer</h3>
+        <p>We do not sell jewellery</p>
+      </article>
+      <article class="trust-item">
+        <span class="trust-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 20V8l8-4 8 4v12" stroke="#fff" stroke-width="1.6"/><path d="M9 20v-6h6v6" stroke="#fff" stroke-width="1.6"/></svg>
+        </span>
+        <h3>{branchCount} branches</h3>
+        <p>{company.region}</p>
+      </article>
+      <article class="trust-item">
+        <span class="trust-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.2" stroke="#fff" stroke-width="1.6"/><path d="M5 19c.8-3.2 3.4-5 7-5s6.2 1.8 7 5" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </span>
+        <h3>XRF tested</h3>
+        <p>In front of you</p>
+      </article>
+      <article class="trust-item">
+        <span class="trust-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#fff" stroke-width="1.6"/><path d="M12 7v10M9.5 9.5c.6-1 1.6-1.5 2.5-1.5 1.4 0 2.5.8 2.5 2s-1 2-2.6 2.4c-1.5.4-2.4.9-2.4 2.1 0 1.2 1.1 2 2.6 2 .9 0 1.8-.4 2.4-1.3" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </span>
+        <h3>Highest price</h3>
+        <p>Live market based</p>
+      </article>
+      <article class="trust-item">
+        <span class="trust-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#fff" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </span>
+        <h3>Instant payment</h3>
+        <p>Within minutes</p>
+      </article>
+    </div>
+  </div>
+
+  <div class="market-band">
+    <div class="wrap market-row">
+      <div class="market-copy">
+        <p class="market-kicker">
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 16 9 9l4 5 7-11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Live market update
+        </p>
+        <h2 data-market-title>Today’s Gold Rate</h2>
+        <p>Indicative rate per gram. Final payout is the branch quote after XRF testing at Jathin Gold.</p>
+      </div>
+      <div class="market-stage" data-market>
+        <button type="button" class="market-arrow market-arrow-l" data-dir="-1" aria-label="Previous rate">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M14.5 5.5 8 12l6.5 6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="market-card">
+          <div class="market-slide is-on" data-slide="gold">
+            <div>
+              <span>24K</span>
+              <strong data-k="gold24">{formatInrCompact(rates.gold.perGram24k)}</strong>
+              <em>per gram</em>
+            </div>
+            <div>
+              <span>22K</span>
+              <strong data-k="gold22">{formatInrCompact(rates.gold.perGram22k)}</strong>
+              <em>per gram</em>
+            </div>
+          </div>
+          <div class="market-slide" data-slide="silver">
+            <div>
+              <span>Silver</span>
+              <strong data-k="silver">{formatInrCompact(rates.silver.perGram)}</strong>
+              <em>per gram</em>
+            </div>
+            <div>
+              <span>10 g</span>
+              <strong data-k="silver" data-mult="10">{formatInrCompact(rates.silver.perGram * 10)}</strong>
+              <em>indicative</em>
+            </div>
+          </div>
+          <div class="market-slide" data-slide="platinum">
+            <div>
+              <span>Platinum</span>
+              <strong data-k="platinum">{formatInrCompact(rates.platinum.perGram)}</strong>
+              <em>per gram</em>
+            </div>
+            <div>
+              <span>10 g</span>
+              <strong data-k="platinum" data-mult="10">{formatInrCompact(rates.platinum.perGram * 10)}</strong>
+              <em>indicative</em>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="market-arrow market-arrow-r" data-dir="1" aria-label="Next rate">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M9.5 5.5 16 12l-6.5 6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const titles: Record<string, string> = {
+    gold: 'Today’s Gold Rate',
+    silver: 'Today’s Silver Rate',
+    platinum: 'Today’s Platinum Rate',
+  };
+  const root = document.querySelector('[data-market]');
+  const title = document.querySelector('[data-market-title]');
+  if (root) {
+    const slides = [...root.querySelectorAll<HTMLElement>('.market-slide')];
+    let i = 0;
+    let timer: ReturnType<typeof setInterval>;
+    const show = (next: number) => {
+      slides[i].classList.remove('is-on');
+      i = (next + slides.length) % slides.length;
+      slides[i].classList.add('is-on');
+      const key = slides[i].dataset.slide || 'gold';
+      if (title) title.textContent = titles[key] ?? titles.gold;
+    };
+    const play = () => {
+      clearInterval(timer);
+      timer = setInterval(() => show(i + 1), 7000);
+    };
+    root.querySelectorAll<HTMLButtonElement>('[data-dir]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        show(i + Number(btn.dataset.dir));
+        play();
+      });
+    });
+    play();
+  }
+</script>

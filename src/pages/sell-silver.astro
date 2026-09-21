@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/Base.astro';
+import SellDesk from '../components/SellDesk.astro';
+import FaqList from '../components/FaqList.astro';
+import { company, telUrl, whatsappUrl } from '../data/company';
+import { silverFaqs } from '../data/faqs';
+import { getRates } from '../lib/rates';
+import { formatInrCompact } from '../lib/format';
+import { breadcrumbJsonLd, faqJsonLd, serviceJsonLd } from '../lib/seo';
+
+const rates = await getRates();
+const wa = whatsappUrl('Hello Jathin Gold, I want to sell silver in Hyderabad.');
+---
+
+<Base
+  title={`Sell Silver in ${company.region}`}
+  description={`Sell sterling and fine silver in ${company.region}. Live indicative ${formatInrCompact(rates.silver.perGram)}/g. XRF at the desk, same-visit payment.`}
+  path="/sell-silver"
+  jsonLd={[
+    serviceJsonLd({ name: 'Sell silver for cash', path: '/sell-silver', description: 'Silver buying with XRF testing.' }),
+    faqJsonLd(silverFaqs),
+    breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Sell silver', path: '/sell-silver' }]),
+  ]}
+>
+  <section class="sell-stage">
+    <div class="wrap">
+      <p class="crumbs"><a href="/">Home</a> / Sell silver</p>
+      <div class="sell-hero">
+        <div class="sell-copy">
+          <p class="kicker">Silver buyer in {company.region}</p>
+          <h1>Sell silver for cash in {company.region}</h1>
+          <p class="lede">
+            Sterling, 999, and household silver. Purity on silver varies more than gold — we test every piece and pay
+            the reading, not the stamp if the stamp is wrong.
+          </p>
+          <ul class="sell-points">
+            <li>999, 925, and mixed lots, XRF’d at the same desk</li>
+            <li>Utensils and pooja silver accepted with jewellery</li>
+            <li>Written quote before you decide</li>
+            <li>Same-visit cash or bank transfer</li>
+          </ul>
+          <p class="sell-rate-chip">
+            Today’s fine silver <strong data-k="silver">{formatInrCompact(rates.silver.perGram)}</strong>/g
+            <span>· indicative</span>
+          </p>
+          <p class="sell-cta">
+            <a class="btn btn-seal" href={telUrl}>Call {company.phoneShort}</a>
+            <a class="btn btn-ghost" href={wa}>WhatsApp</a>
+          </p>
+        </div>
+        <aside class="sell-card-col">
+          <SellDesk metal="silver" rates={rates} />
+          <nav class="sell-alts" aria-label="Other metals">
+            <a href="/sell-gold">Gold</a>
+            <a href="/sell-silver" aria-current="page">Silver</a>
+            <a href="/sell-platinum">Platinum</a>
+          </nav>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <h2>How to sell silver in {company.region}</h2>
+      <p class="intro">
+        Gold jewellery in India clusters around 22K. Silver ranges from 999 bars to mixed lots with copper solder. That
+        is why the gun comes out for every piece, including “sterling” that has lived in a kitchen drawer for twenty years.
+      </p>
+      <div class="sell-how">
+        <article>
+          <span>01</span>
+          <h3>Bring the lot and ID</h3>
+          <p>Jewellery, coins, bars, or household silver. You will need more weight for the same rupees than gold — that is expected.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Test the actual fineness</h3>
+          <p>XRF on the counter. Oxidised or soldered pieces often read below the stamp. We pay the reading.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Quote on payable silver</h3>
+          <p>Non-silver parts are deducted in writing. You can refuse and take the metal home.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Paid the same visit</h3>
+          <p>KYC, then cash up to the legal cap or UPI / bank transfer. Large lots: call ahead so the desk is ready.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-ticket">
+    <div class="wrap sell-seo">
+      <div class="prose">
+        <h2>What silver we buy</h2>
+        <p>
+          999 fine bars and coins, 925 sterling jewellery, 800 lots, and mixed household silver — pooja items, vessels,
+          and broken pieces. We do not pay a jewellery-store making charge. We pay tested silver content.
+        </p>
+        <p>
+          A ₹1 lakh silver sale is bulky compared with gold. Bring it. The process is the same: weigh, test, write the
+          quote, pay. The live rate on this page is fine silver, indicative. 925 and 800 are a fraction of that figure,
+          which the calculator already applies.
+        </p>
+        <p>
+          Walk in at any Hyderabad branch, seven days, 9:30 AM – 7:00 PM, or call {company.phoneShort}. Also:
+          <a href="/silver-rate-today">silver rate today</a>.
+        </p>
+      </div>
+      <div>
+        <h2>Silver questions</h2>
+        <FaqList items={silverFaqs} />
+      </div>
+    </div>
+  </section>
+</Base>

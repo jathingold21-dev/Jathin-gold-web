@@ -1,0 +1,44 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { articleJsonLd, breadcrumbJsonLd } from '../../lib/seo';
+
+export async function getStaticPaths() {
+  const guides = await getCollection('guides');
+  return guides.map((g) => ({ params: { slug: g.id }, props: { guide: g } }));
+}
+
+const { guide } = Astro.props;
+const { Content } = await render(guide);
+---
+
+<Base
+  title={guide.data.title}
+  description={guide.data.description}
+  path={`/guides/${guide.id}`}
+  jsonLd={[
+    articleJsonLd({
+      title: guide.data.title,
+      description: guide.data.description,
+      path: `/guides/${guide.id}`,
+      date: guide.data.pubDate.toISOString(),
+    }),
+    breadcrumbJsonLd([
+      { name: 'Home', path: '/' },
+      { name: 'Guides', path: '/guides' },
+      { name: guide.data.title, path: `/guides/${guide.id}` },
+    ]),
+  ]}
+>
+  <article class="wrap page-head">
+    <p class="crumbs"><a href="/">Home</a> / <a href="/guides">Guides</a></p>
+    <h1>{guide.data.title}</h1>
+    <p class="lede">{guide.data.description}</p>
+  </article>
+  <section class="band band-ticket">
+    <div class="wrap prose">
+      <Content />
+      <p><a href="/contact">Get a quote</a> · <a href="/sell-gold">Sell gold</a> · <a href="/calculator">Calculator</a></p>
+    </div>
+  </section>
+</Base>

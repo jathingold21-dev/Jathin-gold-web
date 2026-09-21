@@ -1,0 +1,17 @@
+---
+import type { Branch } from '../data/branches';
+import { telUrl } from '../data/company';
+type Props = { branch: Branch };
+const { branch } = Astro.props;
+---
+
+<article class="branch-card">
+  <h3><a href={`/branches/${branch.slug}`}>{branch.name}</a></h3>
+  <p>{branch.address}</p>
+  <p>{branch.hoursLabel}</p>
+  <p>{branch.note}</p>
+  <p>
+    <a class="btn btn-seal" href={branch.mapsUrl} rel="noopener">Map</a>
+    <a class="btn btn-ghost-ink" href={telUrl}>Call</a>
+  </p>
+</article>

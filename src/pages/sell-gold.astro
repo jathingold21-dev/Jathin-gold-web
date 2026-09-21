@@ -1,0 +1,130 @@
+---
+import Base from '../layouts/Base.astro';
+import SellDesk from '../components/SellDesk.astro';
+import FaqList from '../components/FaqList.astro';
+import { company, telUrl, whatsappUrl } from '../data/company';
+import { goldFaqs } from '../data/faqs';
+import { getRates } from '../lib/rates';
+import { formatInrCompact } from '../lib/format';
+import { breadcrumbJsonLd, faqJsonLd, serviceJsonLd } from '../lib/seo';
+
+const rates = await getRates();
+const wa = whatsappUrl('Hello Jathin Gold, I want to sell gold in Hyderabad.');
+---
+
+<Base
+  title={`Sell Gold in ${company.region} for Instant Cash`}
+  description={`Sell old gold jewellery, coins, and bars in ${company.region}. Live indicative 22K ${formatInrCompact(rates.gold.perGram22k)}/g. XRF at the desk, same-visit cash or bank transfer.`}
+  path="/sell-gold"
+  jsonLd={[
+    serviceJsonLd({
+      name: 'Sell gold for cash',
+      path: '/sell-gold',
+      description: 'Dedicated gold buying with XRF testing and same-visit payment.',
+    }),
+    faqJsonLd(goldFaqs),
+    breadcrumbJsonLd([
+      { name: 'Home', path: '/' },
+      { name: 'Sell gold', path: '/sell-gold' },
+    ]),
+  ]}
+>
+  <section class="sell-stage">
+    <div class="wrap">
+      <p class="crumbs"><a href="/">Home</a> / Sell gold</p>
+      <div class="sell-hero">
+        <div class="sell-copy">
+          <p class="kicker">Gold buyer in {company.region}</p>
+          <h1>Sell gold for instant cash in {company.region}</h1>
+          <p class="lede">
+            Walk in with jewellery, coins, or bars. We XRF on the counter, write the quote, and pay the same visit.
+            Jathin Gold only buys metal — we do not sell jewellery.
+          </p>
+          <ul class="sell-points">
+            <li>Live 22K rate on screen, then a written branch quote</li>
+            <li>XRF purity test you watch — nothing leaves the desk</li>
+            <li>No making-charge deduction; stones come off the weight</li>
+            <li>Cash, UPI, or bank transfer before you leave</li>
+          </ul>
+          <p class="sell-rate-chip">
+            Today’s 22K <strong data-k="gold22">{formatInrCompact(rates.gold.perGram22k)}</strong>/g
+            <span>· indicative</span>
+          </p>
+          <p class="sell-cta">
+            <a class="btn btn-seal" href={telUrl}>Call {company.phoneShort}</a>
+            <a class="btn btn-ghost" href={wa}>WhatsApp</a>
+          </p>
+        </div>
+        <aside class="sell-card-col">
+          <SellDesk metal="gold" rates={rates} />
+          <nav class="sell-alts" aria-label="Other metals">
+            <a href="/sell-gold" aria-current="page">Gold</a>
+            <a href="/sell-silver">Silver</a>
+            <a href="/sell-platinum">Platinum</a>
+          </nav>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <h2>How to sell gold in {company.region}</h2>
+      <p class="intro">
+        The desk is built to finish a purchase, not to push an exchange. Most visits take 20–40 minutes at Banjara Hills,
+        Kukatpally, or Secunderabad.
+      </p>
+      <div class="sell-how">
+        <article>
+          <span>01</span>
+          <h3>Walk in with gold and ID</h3>
+          <p>Bring the jewellery or coins and a photo ID. Aadhaar is enough for most lots. Carry PAN if you expect more than ₹2 lakh.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Weigh and XRF on the counter</h3>
+          <p>Weight is taken in front of you. A handheld XRF reading shows the karat on screen. Nothing goes to a back room.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>A written quote you can refuse</h3>
+          <p>Payable grams, today’s rate, and any stone or solder deduction are written down. You can take the metal home.</p>
+        </article>
+        <article>
+          <span>04</span>
+          <h3>Same-visit payment</h3>
+          <p>Accept, complete KYC, and take cash up to the legal cap — the rest by UPI or bank transfer — with a receipt.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-ticket">
+    <div class="wrap sell-seo">
+      <div class="prose">
+        <h2>What gold we buy in {company.region}</h2>
+        <p>
+          Jathin Gold buys old and unused gold jewellery, broken chains, coins, bars, biscuits, and mixed household lots.
+          22K jewellery is the usual Indian piece — paid at the tested 916, not at the old retail tag. 24K coins and bars
+          move fastest. 18K and mixed karat lots are fine; the analyser reading is the figure we use.
+        </p>
+        <p>
+          Hallmarking helps. It is not required. Stones, pearls, steel springs, glue, and heavy solder are not paid as gold.
+          Those come off the payable weight, in writing, before you accept. We do not deduct making charges.
+        </p>
+        <p>
+          Use the calculator for a planning number. The live 22K, 24K, and 18K rates on this page are indicative market
+          figures. Your payout is the branch quote after XRF. Walk in seven days, 9:30 AM – 7:00 PM, or call {company.phoneShort}.
+        </p>
+        <p>
+          Also: <a href="/sell-gold-jewellery">jewellery</a>, <a href="/sell-gold-coins">coins</a>,
+          <a href="/sell-old-gold">old gold</a>, <a href="/gold-rate-today">today’s table</a>.
+        </p>
+      </div>
+      <div>
+        <h2>Gold questions</h2>
+        <FaqList items={goldFaqs} />
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { company } from '../data/company';
+import { kycFaqs } from '../data/faqs';
+import FaqList from '../components/FaqList.astro';
+import { breadcrumbJsonLd, faqJsonLd, serviceJsonLd } from '../lib/seo';
+---
+
+<Base
+  title="Sell Gold for Cash — Payment Rules"
+  description="Same-visit cash up to ₹2 lakh, then UPI or bank transfer. How Jathin Gold pays when you sell gold in Hyderabad."
+  path="/sell-gold-for-cash"
+  jsonLd={[
+    serviceJsonLd({ name: 'Sell gold for cash', path: '/sell-gold-for-cash', description: 'Same-visit cash and bank transfer for gold sales.' }),
+    faqJsonLd(kycFaqs),
+    breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Sell gold for cash', path: '/sell-gold-for-cash' }]),
+  ]}
+>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="/">Home</a> / <a href="/sell-gold">Sell gold</a> / Cash</p>
+    <h1>Sell gold for cash — and for the amount cash cannot cover</h1>
+    <p class="lede">
+      People search “sell gold for cash” because they need rupees today, not store credit. We pay the same visit. Cash on a single sale stops at ₹2,00,000 under section 269ST. The rest is UPI or bank transfer, still today, still at the same desk in {company.region}.
+    </p>
+  </div>
+  <section class="band band-ticket">
+    <div class="wrap split split-2">
+      <div class="prose">
+        <h2>How the money moves</h2>
+        <p>After you accept the written quote and complete KYC, we pay. There is no “come tomorrow for the cheque.”</p>
+        <ul>
+          <li>Cash up to ₹2 lakh on one sale.</li>
+          <li>UPI or IMPS for speed on the balance.</li>
+          <li>NEFT/RTGS when the amount is large and you prefer the bank’s own rails.</li>
+        </ul>
+        <p>We do not offer jewellery exchange, because we do not sell jewellery.</p>
+      </div>
+      <QuoteForm />
+    </div>
+  </section>
+  <section class="band">
+    <div class="wrap">
+      <FaqList items={kycFaqs} />
+    </div>
+  </section>
+</Base>

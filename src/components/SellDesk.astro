@@ -1,0 +1,394 @@
+---
+import type { Rates } from '../lib/rates';
+import { formatInrCompact } from '../lib/format';
+import { whatsappUrl } from '../data/company';
+
+type Metal = 'gold' | 'silver' | 'platinum';
+type Purity = { id: string; label: string };
+
+type Props = { metal: Metal; rates: Rates };
+const { metal, rates } = Astro.props;
+
+const rupeeChips = [500, 1000, 5000, 10000, 20000];
+const gramChips = [1, 5, 10, 20, 50];
+const defaultRupees = 1000;
+
+const desks: Record<
+  Metal,
+  {
+    title: string;
+    noun: string;
+    defaultPurity: string;
+    purities: Purity[];
+    coin: 'gold' | 'silver' | 'platinum';
+  }
+> = {
+  gold: {
+    title: 'Sell Gold',
+    noun: 'gold',
+    defaultPurity: '22k',
+    purities: [
+      { id: '24k', label: '24K' },
+      { id: '22k', label: '22K' },
+      { id: '18k', label: '18K' },
+    ],
+    coin: 'gold',
+  },
+  silver: {
+    title: 'Sell Silver',
+    noun: 'silver',
+    defaultPurity: '925',
+    purities: [
+      { id: '999', label: '999' },
+      { id: '925', label: '925' },
+      { id: '800', label: '800' },
+    ],
+    coin: 'silver',
+  },
+  platinum: {
+    title: 'Sell Platinum',
+    noun: 'platinum',
+    defaultPurity: '950',
+    purities: [
+      { id: '950', label: 'PT950' },
+      { id: '900', label: 'PT900' },
+      { id: '850', label: 'PT850' },
+    ],
+    coin: 'platinum',
+  },
+};
+
+const desk = desks[metal];
+
+function perGram(purity: string) {
+  if (metal === 'gold') {
+    if (purity === '24k') return rates.gold.perGram24k;
+    if (purity === '18k') return rates.gold.perGram18k;
+    return rates.gold.perGram22k;
+  }
+  if (metal === 'silver') {
+    const fine = rates.silver.perGram;
+    if (purity === '925') return fine * 0.925;
+    if (purity === '800') return fine * 0.8;
+    return fine;
+  }
+  const fine = rates.platinum.perGram;
+  if (purity === '900') return fine * 0.9;
+  if (purity === '850') return fine * 0.85;
+  return fine * 0.95;
+}
+
+function formatGrams(value: number) {
+  if (!Number.isFinite(value) || value <= 0) return '0g';
+  const digits = value < 0.1 ? 3 : 2;
+  const n = Number(value.toFixed(value < 0.01 ? 4 : digits));
+  return `${n}g`;
+}
+
+const pg = perGram(desk.defaultPurity);
+const seedGrams = defaultRupees / pg;
+const seedGramsLabel = formatGrams(seedGrams);
+const seedRate = formatInrCompact(pg);
+const seedPurityLabel = desk.purities.find((p) => p.id === desk.defaultPurity)?.label ?? '';
+const defaultWa = whatsappUrl(
+  `Hello Jathin Gold, I want about ${formatInrCompact(defaultRupees)} for ${seedPurityLabel} ${desk.noun} (about ${seedGramsLabel}).`,
+);
+const amountDisplay = defaultRupees.toLocaleString('en-IN');
+---
+
+<div
+  class="desk"
+  data-sell-desk
+  data-metal={metal}
+  data-noun={desk.noun}
+  data-default-purity={desk.defaultPurity}
+>
+  <input type="hidden" data-rate-json value={JSON.stringify(rates)} />
+  <p class="desk-title">{desk.title}</p>
+  <p class="desk-live">
+    Live {seedPurityLabel}{' '}
+    <strong data-live-rate>{seedRate}</strong>/g
+    <span class="desk-live-dot" aria-hidden="true"> · </span>
+    indicative
+  </p>
+
+  <div class="desk-toggle" role="tablist" aria-label="Sell by rupees or grams">
+    <button type="button" role="tab" aria-selected="true" data-mode="rupees">Sell in Rupees</button>
+    <button type="button" role="tab" aria-selected="false" data-mode="grams">Sell in Grams</button>
+  </div>
+
+  <label class="desk-field">
+    <span data-amount-label>Amount in rupees</span>
+    <div class="desk-input">
+      <span class="desk-affix" data-prefix>₹</span>
+      <input
+        data-amount
+        type="text"
+        inputmode="decimal"
+        autocomplete="off"
+        enterkeyhint="done"
+        value={amountDisplay}
+        aria-label="Amount in rupees"
+      />
+      <span class={`desk-coin desk-coin-${desk.coin}`} aria-hidden="true">
+        <svg viewBox="0 0 40 40">
+          <circle cx="20" cy="20" r="17.5" />
+          <circle cx="20" cy="20" r="14.2" fill="none" />
+          <text x="20" y="25" text-anchor="middle">₹</text>
+        </svg>
+      </span>
+    </div>
+  </label>
+
+  <div class="desk-chips" data-chips-rupees>
+    {rupeeChips.map((n) => (
+      <button type="button" data-add={n} class:list={[n === defaultRupees && 'is-on']}>
+        + ₹{n.toLocaleString('en-IN')}
+      </button>
+    ))}
+  </div>
+  <div class="desk-chips is-hidden" data-chips-grams hidden>
+    {gramChips.map((n) => (
+      <button type="button" data-add={n}>+ {n}g</button>
+    ))}
+  </div>
+
+  <p class="desk-get" aria-live="polite">
+    <span class={`desk-coin desk-coin-${desk.coin} desk-get-ico`} aria-hidden="true">
+      <svg viewBox="0 0 40 40">
+        <circle cx="20" cy="20" r="17.5" />
+        <circle cx="20" cy="20" r="14.2" fill="none" />
+        <text x="20" y="25" text-anchor="middle">₹</text>
+      </svg>
+    </span>
+    <span>
+      <span data-get-label>You sell</span>:
+      {' '}
+      <strong data-get-value>{seedGramsLabel}</strong>
+    </span>
+  </p>
+
+  <p class="desk-purity-label" id="purity-label">Purity</p>
+  <div class="desk-purity" role="radiogroup" aria-labelledby="purity-label">
+    {desk.purities.map((p) => (
+      <button
+        type="button"
+        role="radio"
+        data-purity={p.id}
+        aria-checked={p.id === desk.defaultPurity ? 'true' : 'false'}
+        class:list={[p.id === desk.defaultPurity && 'is-on']}
+      >
+        {p.label}
+      </button>
+    ))}
+  </div>
+
+  <a class="desk-go" data-wa href={defaultWa}>Proceed To Sell</a>
+
+  <p class="desk-note">
+    The estimated {desk.noun} amount is indicative and based on live prices. The actual payout may vary at the
+    time of transaction after XRF testing at the branch.
+  </p>
+</div>
+
+<script>
+  import { formatInrCompact } from '../lib/format';
+  import type { Rates } from '../lib/rates-core';
+  import { company } from '../data/company';
+
+  type Mode = 'rupees' | 'grams';
+
+  function perGram(rates: Rates, metal: string, purity: string) {
+    if (metal === 'gold') {
+      if (purity === '24k') return rates.gold.perGram24k;
+      if (purity === '18k') return rates.gold.perGram18k;
+      return rates.gold.perGram22k;
+    }
+    if (metal === 'silver') {
+      const fine = rates.silver.perGram;
+      if (purity === '925') return fine * 0.925;
+      if (purity === '800') return fine * 0.8;
+      return fine;
+    }
+    const fine = rates.platinum.perGram;
+    if (purity === '900') return fine * 0.9;
+    if (purity === '850') return fine * 0.85;
+    return fine * 0.95;
+  }
+
+  function parseAmount(raw: string) {
+    const n = Number(String(raw).replace(/[₹,\s]/g, ''));
+    return Number.isFinite(n) && n > 0 ? n : 0;
+  }
+
+  function formatRupees(n: number) {
+    if (!n) return '';
+    return Math.round(n).toLocaleString('en-IN');
+  }
+
+  function formatGrams(value: number) {
+    if (!Number.isFinite(value) || value <= 0) return '0g';
+    const digits = value < 0.1 ? 3 : 2;
+    const n = Number(value.toFixed(value < 0.01 ? 4 : digits));
+    return `${n}g`;
+  }
+
+  function formatGramInput(n: number) {
+    if (!n) return '';
+    const digits = n < 1 ? 3 : 2;
+    return String(Number(n.toFixed(digits)));
+  }
+
+  function purityLabel(root: HTMLElement, id: string) {
+    const btn = root.querySelector(`[data-purity="${id}"]`);
+    return btn?.textContent?.trim() || id;
+  }
+
+  function bind(root: HTMLElement) {
+    const json = root.querySelector<HTMLInputElement>('[data-rate-json]');
+    const amountEl = root.querySelector<HTMLInputElement>('[data-amount]');
+    const amountLabel = root.querySelector<HTMLElement>('[data-amount-label]');
+    const prefix = root.querySelector<HTMLElement>('[data-prefix]');
+    const getLabel = root.querySelector<HTMLElement>('[data-get-label]');
+    const getValue = root.querySelector<HTMLElement>('[data-get-value]');
+    const liveRate = root.querySelector<HTMLElement>('[data-live-rate]');
+    const wa = root.querySelector<HTMLAnchorElement>('[data-wa]');
+    const rupeeChips = root.querySelector<HTMLElement>('[data-chips-rupees]');
+    const gramChips = root.querySelector<HTMLElement>('[data-chips-grams]');
+    if (!json || !amountEl || !getValue || !wa) return;
+
+    const metal = root.dataset.metal || 'gold';
+    const noun = root.dataset.noun || metal;
+    let mode: Mode = 'rupees';
+    let purity = root.dataset.defaultPurity || '22k';
+    let rupees = parseAmount(amountEl.value) || 1000;
+    let grams = 0;
+
+    const readRates = (): Rates | null => {
+      try {
+        return JSON.parse(json.value) as Rates;
+      } catch {
+        return null;
+      }
+    };
+
+    const markChips = (wrap: HTMLElement | null, value: number) => {
+      wrap?.querySelectorAll<HTMLButtonElement>('[data-add]').forEach((btn) => {
+        btn.classList.toggle('is-on', Number(btn.dataset.add) === value);
+      });
+    };
+
+    const run = () => {
+      const rates = readRates();
+      if (!rates) return;
+      const rate = perGram(rates, metal, purity);
+      if (!rate) return;
+
+      if (mode === 'rupees') {
+        grams = rupees / rate;
+      } else {
+        rupees = grams * rate;
+      }
+
+      if (liveRate) liveRate.textContent = formatInrCompact(rate);
+      if (prefix) prefix.hidden = mode !== 'rupees';
+      if (amountLabel) amountLabel.textContent = mode === 'rupees' ? 'Amount in rupees' : 'Amount in grams';
+      amountEl.setAttribute('aria-label', amountLabel?.textContent || 'Amount');
+      if (getLabel) getLabel.textContent = mode === 'rupees' ? 'You sell' : 'You Get';
+      getValue.textContent = mode === 'rupees' ? formatGrams(grams) : formatInrCompact(rupees);
+
+      if (document.activeElement !== amountEl) {
+        amountEl.value = mode === 'rupees' ? formatRupees(rupees) : formatGramInput(grams);
+      }
+
+      rupeeChips?.classList.toggle('is-hidden', mode !== 'rupees');
+      gramChips?.classList.toggle('is-hidden', mode !== 'grams');
+      if (rupeeChips) rupeeChips.hidden = mode !== 'rupees';
+      if (gramChips) gramChips.hidden = mode !== 'grams';
+      markChips(rupeeChips, rupees);
+      markChips(gramChips, grams);
+
+      const ok = (mode === 'rupees' ? rupees : grams) > 0;
+      wa.classList.toggle('is-off', !ok);
+      wa.setAttribute('aria-disabled', ok ? 'false' : 'true');
+      const kar = purityLabel(root, purity);
+      const text =
+        mode === 'rupees'
+          ? `Hello Jathin Gold, I want about ${formatInrCompact(rupees)} for ${kar} ${noun} (about ${formatGrams(grams)}).`
+          : `Hello Jathin Gold, I have about ${formatGrams(grams)} of ${kar} ${noun} to sell. Indicative ${formatInrCompact(rupees)}.`;
+      wa.href = `https://wa.me/${company.whatsapp}?text=${encodeURIComponent(text)}`;
+    };
+
+    root.querySelectorAll<HTMLButtonElement>('[data-mode]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const next = btn.dataset.mode === 'grams' ? 'grams' : 'rupees';
+        if (next === mode) return;
+        const rates = readRates();
+        if (rates) {
+          const rate = perGram(rates, metal, purity);
+          if (mode === 'rupees') grams = rupees / rate;
+          else rupees = grams * rate;
+        }
+        mode = next;
+        root.querySelectorAll<HTMLButtonElement>('[data-mode]').forEach((b) => {
+          b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+        });
+        amountEl.value = mode === 'rupees' ? formatRupees(rupees) : formatGramInput(grams);
+        run();
+        amountEl.focus();
+      });
+    });
+
+    root.querySelectorAll<HTMLButtonElement>('[data-purity]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        purity = btn.dataset.purity || purity;
+        root.querySelectorAll<HTMLButtonElement>('[data-purity]').forEach((b) => {
+          const on = b === btn;
+          b.classList.toggle('is-on', on);
+          b.setAttribute('aria-checked', on ? 'true' : 'false');
+        });
+        run();
+      });
+    });
+
+    const addFrom = (btn: HTMLButtonElement) => {
+      const n = Number(btn.dataset.add);
+      if (!Number.isFinite(n) || n <= 0) return;
+      if (mode === 'rupees') rupees += n;
+      else grams += n;
+      amountEl.value = mode === 'rupees' ? formatRupees(rupees) : formatGramInput(grams);
+      run();
+    };
+    rupeeChips?.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-add]');
+      if (btn) addFrom(btn);
+    });
+    gramChips?.addEventListener('click', (e) => {
+      const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('[data-add]');
+      if (btn) addFrom(btn);
+    });
+
+    amountEl.addEventListener('input', () => {
+      const n = parseAmount(amountEl.value);
+      if (mode === 'rupees') rupees = Math.min(n, 1e8);
+      else grams = Math.min(n, 2e4);
+      run();
+    });
+    amountEl.addEventListener('blur', () => {
+      amountEl.value = mode === 'rupees' ? formatRupees(rupees) : formatGramInput(grams);
+    });
+
+    wa.addEventListener('click', (e) => {
+      if (wa.getAttribute('aria-disabled') === 'true') e.preventDefault();
+    });
+
+    window.addEventListener('jathin:rates', ((ev: CustomEvent<Rates>) => {
+      json.value = JSON.stringify(ev.detail);
+      run();
+    }) as EventListener);
+
+    run();
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-sell-desk]').forEach(bind);
+</script>

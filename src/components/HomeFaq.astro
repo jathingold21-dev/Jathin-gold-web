@@ -1,0 +1,21 @@
+---
+import { homeFaqCards } from '../data/faqs';
+---
+
+<section class="home-faq">
+  <div class="wrap">
+    <p class="home-faq-kicker">FAQs</p>
+    <h2>Frequently Asked Questions</h2>
+    <div class="home-faq-grid">
+      {homeFaqCards.map((f) => (
+        <details>
+          <summary>
+            <span>{f.q}</span>
+            <i aria-hidden="true">+</i>
+          </summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

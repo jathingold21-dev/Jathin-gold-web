@@ -1,0 +1,68 @@
+---
+import Base from '../layouts/Base.astro';
+import Calculator from '../components/Calculator.astro';
+import { company } from '../data/company';
+import { getRates } from '../lib/rates';
+import { formatInrCompact, formatTime } from '../lib/format';
+import { breadcrumbJsonLd } from '../lib/seo';
+
+const rates = await getRates();
+const rows = [
+  { k: '24K (999)', g1: rates.gold.perGram24k, g10: rates.gold.perGram24k * 10, key: 'gold24' },
+  { k: '22K (916)', g1: rates.gold.perGram22k, g10: rates.gold.perGram22k * 10, key: 'gold22' },
+  { k: '18K (750)', g1: rates.gold.perGram18k, g10: rates.gold.perGram18k * 10, key: 'gold18' },
+];
+---
+
+<Base
+  title={`Gold Rate Today in ${company.region} — 22K, 24K, 18K`}
+  description={`Live indicative gold rate in ${company.region}: 22K ${formatInrCompact(rates.gold.perGram22k)}/g, 24K ${formatInrCompact(rates.gold.perGram24k)}/g. Payout after XRF at Jathin Gold.`}
+  path="/gold-rate-today"
+  jsonLd={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Gold rate today', path: '/gold-rate-today' }])}
+>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="/">Home</a> / Gold rate today</p>
+    <h1>Gold rate today</h1>
+    <p class="lede">
+      Indicative per gram, converted from live international spot with an India landing factor, or from IBJA when an API key is set. This is not the final buy price.
+      Last build snapshot: {formatTime(rates.fetchedAt)} IST.
+    </p>
+  </div>
+  <section class="band">
+    <div class="wrap">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Purity</th><th>1 gram</th><th>10 grams</th></tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr>
+                <td>{r.k}</td>
+                <td class="num" data-k={r.key}>{formatInrCompact(r.g1)}</td>
+                <td class="num">{formatInrCompact(r.g10)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="notice">10g column uses the snapshot rate and does not live-update. Use the calculator for other weights.</p>
+      <p>
+        <a href="/silver-rate-today">Silver</a> · <a href="/platinum-rate-today">Platinum</a> · <a href="/sell-gold">Sell gold</a>
+      </p>
+    </div>
+  </section>
+  <section class="band band-ticket">
+    <div class="wrap split split-2">
+      <div>
+        <h2>Estimate a lot</h2>
+        <Calculator rates={rates} />
+      </div>
+      <div class="prose">
+        <h2>Why the branch number can differ</h2>
+        <p>Purity is not always the stamp. Stones come off the weight. A 22K chain with a 1 gram clasp of something else is not 10 grams of 22K if the scale says 10.</p>
+        <p>Indian bullion (IBJA) also moves versus London. The site tracks the market so you are not walking in blind. The desk quote is still the quote.</p>
+      </div>
+    </div>
+  </section>
+</Base>

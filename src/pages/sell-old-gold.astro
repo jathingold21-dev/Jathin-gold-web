@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { breadcrumbJsonLd, serviceJsonLd } from '../lib/seo';
+---
+
+<Base
+  title="Sell Old Gold Jewellery"
+  description="Sell unused, broken, or inherited gold. Jathin Gold pays on tested metal, not on the original making charge or design."
+  path="/sell-old-gold"
+  jsonLd={[
+    serviceJsonLd({ name: 'Sell old gold', path: '/sell-old-gold', description: 'Buyers of unused and broken gold jewellery.' }),
+    breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Old gold', path: '/sell-old-gold' }]),
+  ]}
+>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="/">Home</a> / Old gold</p>
+    <h1>Old gold is still gold</h1>
+    <p class="lede">Broken hooks, missing stones, a bridal set that has not been worn in a decade — we buy the metal. Design does not add rupees at a buying desk, and it should not subtract them either, beyond real stone and solder weight.</p>
+  </div>
+  <section class="band band-ticket">
+    <div class="wrap split split-2">
+      <div class="prose">
+        <h2>What “old” usually means here</h2>
+        <p>Inherited jewellery without a bill. Temple jewellery with enamel. A chain repaired twice. Coins from a bank locker. All of it is tested the same way: weigh, XRF, write the quote.</p>
+        <p>If a piece is part-gold and part-something else, we say so on paper. You can take it home if the number is wrong for you.</p>
+        <p><a href="/sell-gold">Sell gold overview</a> · <a href="/how-it-works">How it works</a></p>
+      </div>
+      <QuoteForm />
+    </div>
+  </section>
+</Base>

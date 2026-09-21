@@ -1,0 +1,43 @@
+---
+/** Bundled once per page. Refreshes every [data-k] node from the public spot API. */
+---
+
+<script>
+  import { fetchPublicSpot } from '../lib/rates-core';
+  import { formatInrCompact, formatTime } from '../lib/format';
+
+  const map: Record<string, (r: Awaited<ReturnType<typeof fetchPublicSpot>>) => number> = {
+    gold22: (r) => r.gold.perGram22k,
+    gold24: (r) => r.gold.perGram24k,
+    gold18: (r) => r.gold.perGram18k,
+    silver: (r) => r.silver.perGram,
+    platinum: (r) => r.platinum.perGram,
+  };
+
+  async function refresh() {
+    try {
+      const rates = await fetchPublicSpot();
+      document.querySelectorAll<HTMLElement>('[data-k]').forEach((el) => {
+        const key = el.dataset.k;
+        if (!key || !(key in map)) return;
+        const n = map[key](rates) * Number(el.dataset.mult || 1);
+        el.textContent = formatInrCompact(n);
+      });
+      document.querySelectorAll<HTMLElement>('[data-updated]').forEach((el) => {
+        el.textContent = formatTime(rates.fetchedAt);
+      });
+      document.querySelectorAll<HTMLInputElement>('[data-rate-json]').forEach((el) => {
+        el.value = JSON.stringify(rates);
+      });
+      document.dispatchEvent(new CustomEvent('jathin:rates', { detail: rates }));
+    } catch {
+      /* keep build-time figures */
+    }
+  }
+
+  const idle = window.requestIdleCallback ?? ((cb: () => void) => setTimeout(cb, 400));
+  idle(() => {
+    refresh();
+    setInterval(refresh, 60_000);
+  });
+</script>

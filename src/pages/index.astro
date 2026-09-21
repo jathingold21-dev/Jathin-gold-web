@@ -1,0 +1,75 @@
+---
+import Base from '../layouts/Base.astro';
+import TrustMarket from '../components/TrustMarket.astro';
+import WhyChoose from '../components/WhyChoose.astro';
+import HomeServices from '../components/HomeServices.astro';
+import HomeFaq from '../components/HomeFaq.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { company } from '../data/company';
+import { homeFaqCards } from '../data/faqs';
+import { getRates } from '../lib/rates';
+import { faqJsonLd, serviceJsonLd } from '../lib/seo';
+
+const rates = await getRates();
+---
+
+<Base
+  title={`Sell Gold for Cash in ${company.region}`}
+  description={`Dedicated gold, silver, and platinum buyer in ${company.region}. Live indicative rates, XRF testing in front of you, same-visit payment. We do not sell jewellery.`}
+  path="/"
+  jsonLd={[
+    faqJsonLd(homeFaqCards),
+    serviceJsonLd({
+      name: 'Sell gold, silver, and platinum for cash',
+      path: '/',
+      description: company.description,
+    }),
+  ]}
+>
+  <section class="hero-light">
+    <div class="wrap hero-light-inner">
+      <div class="hero-stage">
+        <div class="hero-copy">
+          <p class="kicker">Trusted across Hyderabad</p>
+          <h1>Hyderabad’s Most Trusted <em>Gold Buying Company</em></h1>
+          <p class="lede">Get the highest value for your gold with transparent evaluation, live rates, and instant payment.</p>
+          <p class="hero-link">
+            <a href="/branches">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12Z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="10" r="2.2" stroke="currentColor" stroke-width="1.7"/></svg>
+              Explore our Hyderabad branches
+              <span aria-hidden="true">→</span>
+            </a>
+          </p>
+          <ul class="trust-row">
+            <li><strong>100% Transparent</strong> No hidden charges</li>
+            <li><strong>Highest Gold Rate</strong> Live market based</li>
+            <li><strong>Instant Payment</strong> Cash</li>
+          </ul>
+        </div>
+        <div class="hero-person">
+          <div class="hero-rings" aria-hidden="true"></div>
+          <img
+            src="/founder.png"
+            alt="Jathin Gold — Hyderabad gold buyer"
+            width="832"
+            height="1208"
+          />
+        </div>
+        <aside class="hero-card" id="valuation">
+          <p class="kicker">Free gold valuation</p>
+          <h2>Know your gold’s value</h2>
+          <p class="hero-card-lead">Share a few details and our team will help with the next step.</p>
+          <QuoteForm compact />
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <TrustMarket rates={rates} />
+
+  <WhyChoose />
+
+  <HomeServices />
+
+  <HomeFaq />
+</Base>

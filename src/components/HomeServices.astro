@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+import spot from '../assets/services/spot-cash.jpg';
+import pledged from '../assets/services/pledged.jpg';
+import secondHand from '../assets/services/second-hand.jpg';
+import used from '../assets/services/used-gold.jpg';
+
+const items = [
+  {
+    href: '/sell-gold-for-cash',
+    title: 'Spot cash for your gold',
+    img: spot,
+    alt: 'Indian rupees next to a gold coin on a scale',
+  },
+  {
+    href: '/contact',
+    title: 'Release your pledged gold',
+    img: pledged,
+    alt: 'Cash fanned in front of gold jewellery',
+  },
+  {
+    href: '/sell-old-gold',
+    title: 'Second hand gold buyer',
+    img: secondHand,
+    alt: 'Heap of second-hand gold jewellery with stones',
+  },
+  {
+    href: '/sell-gold-jewellery',
+    title: 'Sell your used gold',
+    img: used,
+    alt: 'Hand holding used gold chains',
+  },
+];
+---
+
+<section class="home-svc" aria-labelledby="home-svc-title">
+  <div class="wrap">
+    <h2 id="home-svc-title" class="home-svc-title">Our services</h2>
+    <p class="home-svc-lead">Transparent buying for gold, silver, and platinum — tested at the desk, paid the same visit.</p>
+    <div class="home-svc-grid">
+      {items.map((s) => (
+        <a href={s.href}>
+          <span class="home-svc-pic">
+            <Image src={s.img} alt={s.alt} widths={[320, 480]} sizes="180px" />
+          </span>
+          <strong>{s.title}</strong>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

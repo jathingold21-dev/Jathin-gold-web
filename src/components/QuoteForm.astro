@@ -1,0 +1,105 @@
+---
+import { whatsappUrl } from '../data/company';
+
+type Props = { compact?: boolean };
+const { compact = false } = Astro.props;
+const key = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+const defaultWa = whatsappUrl('I want a free valuation for gold / silver / platinum.');
+---
+
+<form class:list={['form', 'quote-form', compact && 'form-compact']} data-quote method="post" action="https://api.web3forms.com/submit">
+  {key ? <input type="hidden" name="access_key" value={key} /> : null}
+  <input type="hidden" name="subject" value="Jathin Gold valuation request" />
+  <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" />
+  <label>
+    Full name
+    <input name="name" required autocomplete="name" placeholder="Full name" />
+  </label>
+  <label>
+    Phone number
+    <input name="phone" required inputmode="tel" autocomplete="tel" placeholder="10-digit phone number" />
+  </label>
+  <label>
+    Approximate gold weight
+    <input name="weight" inputmode="decimal" placeholder="Weight in grams" />
+  </label>
+  {compact ? (
+    <input type="hidden" name="metal" value="Gold" />
+  ) : (
+    <label>
+      Metal
+      <select name="metal">
+        <option>Gold</option>
+        <option>Silver</option>
+        <option>Platinum</option>
+        <option>Mixed lot</option>
+      </select>
+    </label>
+  )}
+  <label>
+    State
+    <select name="state">
+      <option value="">Select state</option>
+      <option value="Telangana">Telangana</option>
+      <option value="Andhra Pradesh">Andhra Pradesh</option>
+    </select>
+  </label>
+  <button class="btn btn-seal btn-block" type="submit">{compact ? 'Get Free Valuation' : 'Request a callback'}</button>
+  {compact ? null : (
+    <a class="btn btn-ghost-ink btn-block" href={defaultWa} data-wa-form>Or send on WhatsApp</a>
+  )}
+  <p class="form-note">No obligation. Your details stay private.</p>
+  <p class="form-status" data-form-status role="status"></p>
+</form>
+
+<script>
+  import { company } from '../data/company';
+
+  const key = import.meta.env.PUBLIC_WEB3FORMS_KEY;
+
+  function payload(form: HTMLFormElement) {
+    const data = new FormData(form);
+    return {
+      name: String(data.get('name') || ''),
+      phone: String(data.get('phone') || ''),
+      metal: String(data.get('metal') || 'Gold'),
+      weight: String(data.get('weight') || ''),
+      state: String(data.get('state') || ''),
+    };
+  }
+
+  function waHref(form: HTMLFormElement) {
+    const p = payload(form);
+    const text = `Hello Jathin Gold, I am ${p.name || '(name)'} (${p.phone || 'no phone'}). I want to sell ${p.metal || 'gold'}, about ${p.weight || '?'}g${p.state ? `, in ${p.state}` : ''}.`;
+    return `https://wa.me/${company.whatsapp}?text=${encodeURIComponent(text)}`;
+  }
+
+  document.querySelectorAll<HTMLFormElement>('[data-quote]').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('[data-form-status]');
+    const wa = form.querySelector<HTMLAnchorElement>('[data-wa-form]');
+    form.addEventListener('input', () => {
+      if (wa) wa.href = waHref(form);
+    });
+    form.addEventListener('submit', async (e) => {
+      if (!key) {
+        e.preventDefault();
+        window.location.href = waHref(form);
+        return;
+      }
+      e.preventDefault();
+      if (status) status.textContent = 'Sending…';
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: new FormData(form),
+        });
+        if (!res.ok) throw new Error('fail');
+        if (status) status.textContent = 'Received. We will call you shortly.';
+        form.reset();
+      } catch {
+        if (status) status.textContent = 'Could not send the form. Opening WhatsApp instead.';
+        window.location.href = waHref(form);
+      }
+    });
+  });
+</script>

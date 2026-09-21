@@ -1,0 +1,32 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { breadcrumbJsonLd } from '../../lib/seo';
+
+const guides = (await getCollection('guides')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<Base
+  title="Gold Selling Guides"
+  description="Practical guides on selling gold, silver, and platinum in India: documents, karats, XRF, and payment rules."
+  path="/guides"
+  jsonLd={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Guides', path: '/guides' }])}
+>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="/">Home</a> / Guides</p>
+    <h1>Guides</h1>
+    <p class="lede">Short, specific pages for people about to walk into a buying desk.</p>
+  </div>
+  <section class="band band-ticket">
+    <div class="wrap guide-list">
+      {guides.map((g) => (
+        <a href={`/guides/${g.id}`}>
+          <h3>{g.data.title}</h3>
+          <p>{g.data.description}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>

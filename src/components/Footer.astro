@@ -1,0 +1,51 @@
+---
+import { company, telUrl, whatsappUrl } from '../data/company';
+import { branches } from '../data/branches';
+---
+
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div>
+      <p class="brand-name">{company.name}</p>
+      <p>{company.tagline}</p>
+      <p><a href={telUrl}>{company.phoneDisplay}</a><br />
+        <a href={whatsappUrl()}>WhatsApp</a> · <a href={`mailto:${company.email}`}>{company.email}</a></p>
+      <p>{company.hoursLabel}</p>
+    </div>
+    <div>
+      <h2>Sell</h2>
+      <ul>
+        <li><a href="/sell-gold">Sell gold</a></li>
+        <li><a href="/sell-silver">Sell silver</a></li>
+        <li><a href="/sell-platinum">Sell platinum</a></li>
+        <li><a href="/sell-old-gold">Old gold</a></li>
+        <li><a href="/sell-gold-jewellery">Jewellery</a></li>
+        <li><a href="/sell-gold-coins">Coins</a></li>
+        <li><a href="/calculator">Calculator</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Rates</h2>
+      <ul>
+        <li><a href="/gold-rate-today">Gold rate today</a></li>
+        <li><a href="/silver-rate-today">Silver rate today</a></li>
+        <li><a href="/platinum-rate-today">Platinum rate today</a></li>
+        <li><a href="/how-it-works">How it works</a></li>
+        <li><a href="/faq">FAQ</a></li>
+        <li><a href="/guides">Guides</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Visit</h2>
+      <ul>
+        {branches.map((b) => (
+          <li><a href={`/branches/${b.slug}`}>{b.name}</a></li>
+        ))}
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/privacy">Privacy</a></li>
+        <li><a href="/terms">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>

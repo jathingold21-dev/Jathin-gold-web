@@ -1,0 +1,32 @@
+---
+import Base from '../layouts/Base.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { breadcrumbJsonLd, serviceJsonLd } from '../lib/seo';
+---
+
+<Base
+  title="Sell Gold Jewellery"
+  description="Sell 22K and 18K gold jewellery. Stones deducted, XRF in front of you, same-visit payment. Jathin Gold does not sell jewellery."
+  path="/sell-gold-jewellery"
+  jsonLd={[
+    serviceJsonLd({ name: 'Sell gold jewellery', path: '/sell-gold-jewellery', description: 'Buying gold jewellery for cash.' }),
+    breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Gold jewellery', path: '/sell-gold-jewellery' }]),
+  ]}
+>
+  <div class="wrap page-head">
+    <p class="crumbs"><a href="/">Home</a> / Gold jewellery</p>
+    <h1>Sell gold jewellery, not the making charge</h1>
+    <p class="lede">Retail tags bundle metal, making, and stones. A buying desk unbundles them. You are paid for the gold the XRF confirms, minus what is not gold.</p>
+  </div>
+  <section class="band band-ticket">
+    <div class="wrap split split-2">
+      <div class="prose">
+        <h2>Stones and kundan</h2>
+        <p>We can often return unmounted stones. When they stay in the piece, their weight is deducted. Kundan and meenakari need a slower look; that still happens at the counter, not in a back room.</p>
+        <h2>22K vs 18K</h2>
+        <p>Most South Indian jewellery is 22K. 18K is common in machine-made and imported pieces. The reading on the analyser is what we use — not the invoice from 2014.</p>
+      </div>
+      <QuoteForm />
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,95 @@
+---
+import { Image } from 'astro:assets';
+import { company, telUrl } from '../data/company';
+import metals from '../assets/three-metals.jpg';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const home = path === '/';
+const services = [
+  {
+    href: '/sell-gold',
+    title: 'Sell Gold',
+    body: 'Jewellery, coins, and bars. Paid on tested purity.',
+    icon: 'gold',
+  },
+  {
+    href: '/sell-silver',
+    title: 'Sell Silver',
+    body: 'Sterling and household silver, tested at the same desk.',
+    icon: 'silver',
+  },
+  {
+    href: '/sell-platinum',
+    title: 'Sell Platinum',
+    body: 'PT950 jewellery and coins, priced as platinum.',
+    icon: 'platinum',
+  },
+];
+const serviceOpen = services.some((s) => path === s.href);
+---
+
+<header class:list={['site-header', home && 'is-overlay']}>
+  <input type="checkbox" id="nav-open" class="visually-hidden" />
+  <div class="wrap">
+    <div class="header-bar">
+      <a class="brand" href="/" aria-label="Jathin Gold">
+        <img src="/wordmark.svg" alt="Jathin Gold — Cash for Gold" class="brand-wordmark" width="200" height="50" />
+      </a>
+      <nav class="desk-nav" aria-label="Primary">
+        <a href="/" aria-current={path === '/' ? 'page' : undefined}>Home</a>
+        <a href="/about" aria-current={path === '/about' ? 'page' : undefined}>About</a>
+        <div class="nav-mega">
+          <button
+            class="nav-mega-trigger"
+            type="button"
+            aria-expanded="false"
+            aria-haspopup="true"
+            aria-current={serviceOpen ? 'page' : undefined}
+          >Services</button>
+          <div class="mega">
+            <div class="mega-promo">
+              <p>Our services</p>
+              <h2>Trusted gold, silver, and platinum buying.</h2>
+              <p>Walk in, watch the test, take cash or a bank transfer the same visit.</p>
+              <Image src={metals} alt="" widths={[480]} sizes="220px" />
+            </div>
+            <div class="mega-list">
+              {services.map((s) => (
+                <a href={s.href}>
+                  <span class={`mega-ico mega-ico-${s.icon}`} aria-hidden="true">
+                    {s.icon === 'gold' && (
+                      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.6"/><path d="M9 10.5c.5-1 1.4-1.6 3-1.6 1.8 0 3 1 3 2.3 0 1.2-.9 1.9-2.6 2.3-1.6.4-2.6.9-2.6 2.1 0 1.3 1.2 2.2 3.1 2.2 1.5 0 2.6-.6 3.2-1.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M12 7v10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                    )}
+                    {s.icon === 'silver' && (
+                      <svg viewBox="0 0 24 24" fill="none"><rect x="5" y="7" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 12h8M12 9.5v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                    )}
+                    {s.icon === 'platinum' && (
+                      <svg viewBox="0 0 24 24" fill="none"><path d="M12 4 19 8v8l-7 4-7-4V8l7-4Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M12 12 19 8M12 12v8M12 12 5 8" stroke="currentColor" stroke-width="1.5"/></svg>
+                    )}
+                  </span>
+                  <span>
+                    <strong>{s.title}</strong>
+                    {s.body}
+                  </span>
+                  <span class="mega-go" aria-hidden="true">→</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+        <a href="/contact" aria-current={path === '/contact' ? 'page' : undefined}>Contact</a>
+      </nav>
+      <a class="btn-call" href={telUrl}>Call now</a>
+      <label class="nav-label" for="nav-open">Menu</label>
+    </div>
+  </div>
+  <nav class="nav-panel" aria-label="Mobile">
+    <a href="/">Home</a>
+    <a href="/about">About</a>
+    <a href="/sell-gold">Sell Gold</a>
+    <a href="/sell-silver">Sell Silver</a>
+    <a href="/sell-platinum">Sell Platinum</a>
+    <a href="/contact">Contact</a>
+    <a href={telUrl}>Call {company.phoneDisplay}</a>
+  </nav>
+</header>

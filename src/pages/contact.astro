@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { company, telUrl, whatsappUrl } from '../data/company';
+import { branches } from '../data/branches';
+import { breadcrumbJsonLd } from '../lib/seo';
+---
+
+<Base
+  title="Contact Jathin Gold"
+  description={`Call ${company.phoneDisplay}, WhatsApp, or visit a ${company.region} branch. Free valuation, no obligation.`}
+  path="/contact"
+  jsonLd={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Contact', path: '/contact' }])}
+>
+  <section class="contact-page">
+    <h1 class="visually-hidden">Contact Jathin Gold</h1>
+    <div class="wrap contact-grid">
+      <div class="contact-ticket">
+        <ContactForm />
+      </div>
+      <aside class="contact-desk">
+        <div>
+          <p class="contact-desk-hours">{company.hoursLabel}</p>
+          <a class="contact-desk-phone" href={telUrl}>
+            <span>Call the desk</span>
+            {company.phoneShort}
+          </a>
+          <a class="contact-desk-wa" href={whatsappUrl('I want a valuation.')}>WhatsApp {company.phoneShort}</a>
+          <a class="contact-desk-mail" href={`mailto:${company.email}`}>{company.email}</a>
+        </div>
+        <div>
+          <p class="contact-desk-label">Hyderabad branches</p>
+          <ul class="contact-desk-branches">
+            {branches.map((b) => (
+              <li>
+                <a href={b.mapsUrl} rel="noopener">
+                  <span>
+                    <strong>{b.name}</strong>
+                    {b.area}
+                  </span>
+                  Map
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>

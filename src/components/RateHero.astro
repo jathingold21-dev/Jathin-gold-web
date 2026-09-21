@@ -1,0 +1,35 @@
+---
+import type { Rates } from '../lib/rates';
+import { formatInrCompact, formatTime } from '../lib/format';
+
+type Props = { rates: Rates };
+const { rates } = Astro.props;
+---
+
+<div class="rate-hero" data-rates-root>
+  <p class="rate-kicker">Indicative buy rate · 22 karat</p>
+  <p class="rate-label">Gold, per gram</p>
+  <p class="rate-num" data-k="gold22">{formatInrCompact(rates.gold.perGram22k)}</p>
+  <p class="rate-meta">
+    Updated {formatTime(rates.fetchedAt)} IST · not a guaranteed payout ·
+    <a href="/gold-rate-today">full table</a>
+  </p>
+  <div class="rate-split">
+    <div>
+      <span>24K / g</span>
+      <strong data-k="gold24">{formatInrCompact(rates.gold.perGram24k)}</strong>
+    </div>
+    <div>
+      <span>18K / g</span>
+      <strong data-k="gold18">{formatInrCompact(rates.gold.perGram18k)}</strong>
+    </div>
+    <div>
+      <span>Silver / g</span>
+      <strong data-k="silver">{formatInrCompact(rates.silver.perGram)}</strong>
+    </div>
+    <div>
+      <span>Platinum / g</span>
+      <strong data-k="platinum">{formatInrCompact(rates.platinum.perGram)}</strong>
+    </div>
+  </div>
+</div>

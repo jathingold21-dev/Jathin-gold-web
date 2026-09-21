@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import { company } from '../data/company';
+---
+
+<Base
+  title="Privacy"
+  description="How Jathin Gold handles enquiry and KYC data."
+  path="/privacy"
+>
+  <div class="wrap page-head">
+    <h1>Privacy</h1>
+  </div>
+  <section class="band band-ticket">
+    <div class="wrap prose">
+      <p>Enquiry forms collect name, phone, metal, approximate weight, and preferred branch so we can call you. We do not sell this list.</p>
+      <p>A completed purchase requires KYC (typically Aadhaar; PAN above ₹2 lakh). That record is kept as required under Indian law for precious-metal dealing, not for marketing.</p>
+      <p>Questions: <a href={`mailto:${company.email}`}>{company.email}</a></p>
+    </div>
+  </section>
+</Base>

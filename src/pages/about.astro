@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro';
+import { company } from '../data/company';
+import { branches } from '../data/branches';
+import { breadcrumbJsonLd } from '../lib/seo';
+
+const years = Math.max(1, new Date().getFullYear() - company.establishedYear);
+const n = branches.length;
+---
+
+<Base
+  title="About Jathin Gold"
+  description="Jathin Gold is a dedicated buyer of gold, silver, and platinum in Hyderabad. We do not sell jewellery. XRF at the desk, same-visit payment."
+  path="/about"
+  jsonLd={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'About', path: '/about' }])}
+>
+  <section class="about-page">
+    <div class="wrap">
+    <div class="about-layout">
+      <article class="about-card">
+        <div class="about-photo-stage">
+          <div class="about-rings" aria-hidden="true"></div>
+          <div class="about-photo">
+            <img src="/founder.png" alt={`${company.shortName}, founder of ${company.name}`} width="832" height="1208" />
+          </div>
+          <p class="about-badge">Founder</p>
+          <p class="about-trust">
+            <span>Built on trust</span>
+            Since {company.establishedYear}
+          </p>
+        </div>
+        <div class="about-card-body">
+          <h2>{company.shortName}</h2>
+          <p>Dedicated gold, silver, and platinum buyer in {company.region}. The desk pays on tested metal — not on a new jewellery sale.</p>
+          <div class="about-stats">
+            <div>
+              <strong>{years}+</strong>
+              <span>Years</span>
+            </div>
+            <div>
+              <strong>{n}</strong>
+              <span>Branches</span>
+            </div>
+            <div>
+              <strong>3</strong>
+              <span>Metals</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <div class="about-story">
+        <p class="crumbs"><a href="/">Home</a> / About</p>
+        <h1>From a Hyderabad desk to a trusted gold buyer</h1>
+        <p>
+          {company.name} was founded in {company.establishedYear} as a dedicated precious-metal buyer. Jewellers who take your old gold often hope you walk out with a new set. Their incentive is exchange. Ours is metal. We pay, you leave, we refine.
+        </p>
+        <p>
+          The idea is simple: you should see the weight, the XRF reading, and the written quote before you decide. Too many people sell gold without knowing what they were paid for. <strong>We run the opposite desk.</strong>
+        </p>
+
+        <ol class="about-timeline">
+          <li>
+            <time>{company.establishedYear}</time>
+            <div>
+              <h3>The beginning</h3>
+              <p>A buying desk in {company.region} — gold only at first, paid the same visit after a test you can watch.</p>
+            </div>
+          </li>
+          <li>
+            <time>The protocol</time>
+            <div>
+              <h3>Nothing leaves the counter</h3>
+              <p>Calibrated scale, XRF in view, a written quote you can refuse, KYC, then cash or bank transfer.</p>
+            </div>
+          </li>
+          <li>
+            <time>{n} desks</time>
+            <div>
+              <h3>Hyderabad branches</h3>
+              <p>Banjara Hills, Kukatpally, and Secunderabad. Same rate protocol at every counter.</p>
+            </div>
+          </li>
+          <li>
+            <time>Today</time>
+            <div>
+              <h3>Gold, silver, and platinum</h3>
+              <p>Three metals, live indicative rates on this site, open seven days. We still do not sell jewellery.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+    </div>
+  </section>
+</Base>

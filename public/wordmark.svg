@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 64" role="img" aria-label="Jathin Gold">
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#F7E7A4"/>
+      <stop offset="45%" stop-color="#E8C547"/>
+      <stop offset="100%" stop-color="#B8860B"/>
+    </linearGradient>
+  </defs>
+  <rect width="260" height="64" rx="6" fill="#6B1510"/>
+  <text x="130" y="38" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="700" fill="url(#gold)" letter-spacing="1.2">JATHIN GOLD</text>
+  <text x="130" y="54" text-anchor="middle" font-family="Georgia, serif" font-size="8" fill="#E8C547" letter-spacing="3.2">CASH FOR GOLD</text>
+</svg>

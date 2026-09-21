@@ -1,0 +1,105 @@
+---
+import { company, telUrl } from '../data/company';
+import { branches } from '../data/branches';
+
+const n = branches.length;
+---
+
+<section class="why">
+  <div class="wrap">
+    <p class="why-kicker"><span>The Jathin advantage</span></p>
+    <h2>Why Choose <em>Jathin Gold Company</em></h2>
+    <p class="why-rule" aria-hidden="true"></p>
+    <p class="why-lead">Best value for your gold, silver, and platinum — backed by a transparent desk process.</p>
+
+    <div class="why-layout">
+      <div class="why-photo">
+        <div class="why-arch" aria-hidden="true"></div>
+        <img src="/why-founder.png" alt="Jathin Gold" width="832" height="1222" />
+        <div class="why-laurel" aria-hidden="true">
+          <svg viewBox="0 0 140 140">
+            <path fill="#c9a227" d="M70 12c-2 14-18 24-26 40 12-6 24-8 26-8s14 2 26 8c-8-16-24-26-26-40Z"/>
+            <path fill="none" stroke="#c9a227" stroke-width="3" d="M44 54c-10 12-14 28-10 46M96 54c10 12 14 28 10 46M38 78c-8 4-16 14-16 28M102 78c8 4 16 14 16 28"/>
+            <path fill="#c9a227" d="M28 58c4 6 10 8 14 8-6-8-10-16-14-22 2 4 0 10 0 14Zm84 0c-4 6-10 8-14 8 6-8 10-16 14-22-2 4 0 10 0 14Z"/>
+          </svg>
+          <span>XRF<br />tested</span>
+        </div>
+        <div class="why-badge">
+          <div>
+            <strong>{n} branches</strong>
+            <span>Hyderabad</span>
+          </div>
+          <div>
+            <strong>100%</strong>
+            <span>Transparent</span>
+          </div>
+          <a href={telUrl}>Call : {company.phoneShort}</a>
+        </div>
+      </div>
+
+      <div class="why-cards">
+        <article>
+          <span class="why-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="#fff" stroke-width="1.6"/><path d="M12 7v10M9.5 9.5c.6-1 1.6-1.5 2.5-1.5 1.4 0 2.5.8 2.5 2s-1 2-2.6 2.4c-1.5.4-2.4.9-2.4 2.1 0 1.2 1.1 2 2.6 2" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </span>
+          <h3>Highest gold rate</h3>
+          <p>We quote from today’s live market. The branch figure is written before you accept.</p>
+        </article>
+        <article>
+          <span class="why-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M7 20V10h10v10M12 10V4l6 3-6 3" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </span>
+          <h3>100% transparency</h3>
+          <p>No hidden charges. Weight, purity, and deductions are shown on the quote.</p>
+        </article>
+        <article>
+          <span class="why-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="7" width="16" height="10" rx="1.5" stroke="#fff" stroke-width="1.6"/><path d="M8 12h4" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </span>
+          <h3>Instant payment</h3>
+          <p>Cash up to the legal cap, then UPI or bank transfer — same visit.</p>
+        </article>
+        <article>
+          <span class="why-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6" stroke="#fff" stroke-width="1.6"/><path d="m20 20-3.5-3.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </span>
+          <h3>Expert evaluation</h3>
+          <p>Calibrated scale and XRF in front of you. Nothing goes to a back room.</p>
+        </article>
+        <article>
+          <span class="why-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 3 20 7v5c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V7l8-4Z" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </span>
+          <h3>Safe &amp; secure</h3>
+          <p>KYC on every sale. Your identity stays on the receipt, not on a marketing list.</p>
+        </article>
+        <article>
+          <span class="why-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="9" r="3" stroke="#fff" stroke-width="1.6"/><circle cx="16" cy="10" r="2.4" stroke="#fff" stroke-width="1.6"/><path d="M4 19c.7-2.8 2.8-4.2 5-4.2S13.3 16.2 14 19M14.5 18.5c.5-1.8 1.8-2.8 3.5-2.8" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </span>
+          <h3>Trusted in Hyderabad</h3>
+          <p>A buying desk, not a jewellery counter. You leave with cash, not store credit.</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="why-bar">
+      <div>
+        <strong>Accurate purity check</strong>
+        <span>XRF at the counter</span>
+      </div>
+      <div>
+        <strong>Clear deductions</strong>
+        <span>What you see is what you get</span>
+      </div>
+      <div>
+        <strong>Fast process</strong>
+        <span>Most sales under 40 minutes</span>
+      </div>
+      <div>
+        <strong>Customer first</strong>
+        <span>Walk away if the quote is wrong</span>
+      </div>
+    </div>
+  </div>
+</section>

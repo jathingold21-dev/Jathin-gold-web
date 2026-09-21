@@ -1,0 +1,88 @@
+---
+const key = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? '';
+---
+
+<form class="contact-form" data-contact method="post" action="https://api.web3forms.com/submit">
+  {key ? <input type="hidden" name="access_key" value={key} /> : null}
+  <input type="hidden" name="subject" value="Jathin Gold contact" />
+  <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" />
+
+  <label>
+    Name
+    <input name="name" required autocomplete="name" placeholder="Your full name" />
+  </label>
+  <label>
+    Email
+    <input name="email" type="email" required autocomplete="email" placeholder="you@email.com" />
+  </label>
+  <label>
+    Metal
+    <select name="service">
+      <option value="Gold buying">Gold</option>
+      <option value="Silver buying">Silver</option>
+      <option value="Platinum buying">Platinum</option>
+      <option value="Pledged gold">Pledged gold</option>
+      <option value="Mixed lot">Mixed lot</option>
+    </select>
+  </label>
+  <label>
+    Phone
+    <input name="phone" required inputmode="tel" autocomplete="tel" placeholder="10-digit number" />
+  </label>
+  <label class="is-full">
+    Message
+    <textarea name="message" rows="5" placeholder="Weight, karat, and which branch if you know it"></textarea>
+  </label>
+  <div class="is-full contact-form-actions">
+    <button class="btn btn-seal contact-send" type="submit">Request a callback</button>
+  </div>
+  <p class="form-status is-full" data-form-status role="status"></p>
+</form>
+
+<script>
+  import { company } from '../data/company';
+
+  const key = import.meta.env.PUBLIC_WEB3FORMS_KEY;
+
+  function payload(form: HTMLFormElement) {
+    const data = new FormData(form);
+    return {
+      name: String(data.get('name') || ''),
+      email: String(data.get('email') || ''),
+      phone: String(data.get('phone') || ''),
+      service: String(data.get('service') || 'Gold buying'),
+      message: String(data.get('message') || ''),
+    };
+  }
+
+  function waHref(form: HTMLFormElement) {
+    const p = payload(form);
+    const text = `Hello Jathin Gold, I am ${p.name || '(name)'} (${p.phone || 'no phone'}${p.email ? `, ${p.email}` : ''}). I want help with ${p.service}.${p.message ? ` ${p.message}` : ''}`;
+    return `https://wa.me/${company.whatsapp}?text=${encodeURIComponent(text)}`;
+  }
+
+  document.querySelectorAll<HTMLFormElement>('[data-contact]').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('[data-form-status]');
+    form.addEventListener('submit', async (e) => {
+      if (!key) {
+        e.preventDefault();
+        window.location.href = waHref(form);
+        return;
+      }
+      e.preventDefault();
+      if (status) status.textContent = 'Sending…';
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: new FormData(form),
+        });
+        if (!res.ok) throw new Error('fail');
+        if (status) status.textContent = 'Received. We will call you shortly.';
+        form.reset();
+      } catch {
+        if (status) status.textContent = 'Could not send the form. Opening WhatsApp instead.';
+        window.location.href = waHref(form);
+      }
+    });
+  });
+</script>

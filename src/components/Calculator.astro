@@ -1,0 +1,91 @@
+---
+import type { Rates } from '../lib/rates';
+import { formatInrCompact } from '../lib/format';
+import { whatsappUrl } from '../data/company';
+
+type Props = { rates: Rates };
+const { rates } = Astro.props;
+const seed = formatInrCompact(10 * rates.gold.perGram22k);
+---
+
+<div class="calc" data-calc>
+  <input type="hidden" data-rate-json value={JSON.stringify(rates)} />
+  <label>
+    Metal
+    <select data-metal>
+      <option value="gold" selected>Gold</option>
+      <option value="silver">Silver</option>
+      <option value="platinum">Platinum</option>
+    </select>
+  </label>
+  <label>
+    Purity
+    <select data-purity>
+      <option value="22k" selected>22K (916)</option>
+      <option value="24k">24K (999)</option>
+      <option value="18k">18K (750)</option>
+      <option value="fine">Fine / sterling / PT950</option>
+    </select>
+  </label>
+  <label>
+    Weight in grams
+    <input data-grams type="number" min="0.1" step="0.1" value="10" />
+  </label>
+  <div class="calc-out">
+    <span class="rate-kicker">Indicative payout</span>
+    <strong data-out>{seed}</strong>
+    <p class="notice">Before stone/solder deduction. Final figure is the branch XRF quote.</p>
+  </div>
+  <a class="btn btn-seal" data-wa href={whatsappUrl('I have about 10g of 22K gold to sell.')}>Send this to WhatsApp</a>
+</div>
+
+<script>
+  import { formatInrCompact } from '../lib/format';
+  import type { Rates } from '../lib/rates-core';
+  import { company } from '../data/company';
+
+  function perGram(rates: Rates, metal: string, purity: string) {
+    if (metal === 'gold') {
+      if (purity === '24k') return rates.gold.perGram24k;
+      if (purity === '18k') return rates.gold.perGram18k;
+      return rates.gold.perGram22k;
+    }
+    if (metal === 'silver') return rates.silver.perGram;
+    return rates.platinum.perGram;
+  }
+
+  function bind(root: HTMLElement) {
+    const json = root.querySelector<HTMLInputElement>('[data-rate-json]');
+    const metalEl = root.querySelector<HTMLSelectElement>('[data-metal]');
+    const purityEl = root.querySelector<HTMLSelectElement>('[data-purity]');
+    const gramsEl = root.querySelector<HTMLInputElement>('[data-grams]');
+    const out = root.querySelector<HTMLElement>('[data-out]');
+    const wa = root.querySelector<HTMLAnchorElement>('[data-wa]');
+    if (!json || !metalEl || !purityEl || !gramsEl || !out) return;
+
+    const run = () => {
+      let rates: Rates;
+      try {
+        rates = JSON.parse(json.value) as Rates;
+      } catch {
+        return;
+      }
+      const grams = Number(gramsEl.value) || 0;
+      const value = grams * perGram(rates, metalEl.value, purityEl.value);
+      out.textContent = formatInrCompact(value);
+      const label =
+        metalEl.value === 'gold'
+          ? purityEl.selectedOptions[0].text
+          : metalEl.value;
+      if (wa) {
+        const text = `Hello Jathin Gold, I have about ${grams}g of ${label} to sell. Indicative site figure ${formatInrCompact(value)}.`;
+        wa.href = `https://wa.me/${company.whatsapp}?text=${encodeURIComponent(text)}`;
+      }
+    };
+
+    root.addEventListener('input', run);
+    run();
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-calc]').forEach(bind);
+</script>
