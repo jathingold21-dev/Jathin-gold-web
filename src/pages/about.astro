@@ -1,16 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
 import { company } from '../data/company';
-import { branches } from '../data/branches';
 import { breadcrumbJsonLd } from '../lib/seo';
 
 const years = Math.max(1, new Date().getFullYear() - company.establishedYear);
-const n = branches.length;
 ---
 
 <Base
   title="About Jathin Gold"
-  description="Jathin Gold is a dedicated buyer of gold, silver, and platinum in Hyderabad. We do not sell jewellery. XRF at the desk, same-visit payment."
+  description="Jathin Gold is a dedicated buyer of gold, silver, and platinum, available in Andhra Pradesh and Telangana. The desk is in Kothagudem. We do not sell jewellery. XRF at the desk, same-visit payment."
   path="/about"
   jsonLd={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'About', path: '/about' }])}
 >
@@ -38,8 +36,8 @@ const n = branches.length;
               <span>Years</span>
             </div>
             <div>
-              <strong>{n}</strong>
-              <span>Branches</span>
+              <strong>2</strong>
+              <span>States</span>
             </div>
             <div>
               <strong>3</strong>
@@ -51,7 +49,7 @@ const n = branches.length;
 
       <div class="about-story">
         <p class="crumbs"><a href="/">Home</a> / About</p>
-        <h1>From a Hyderabad desk to a trusted gold buyer</h1>
+        <h1>A Kothagudem desk for Andhra Pradesh and Telangana</h1>
         <p>
           {company.name} was founded in {company.establishedYear} as a dedicated precious-metal buyer. Jewellers who take your old gold often hope you walk out with a new set. Their incentive is exchange. Ours is metal. We pay, you leave, we refine.
         </p>
@@ -75,10 +73,10 @@ const n = branches.length;
             </div>
           </li>
           <li>
-            <time>{n} desks</time>
+            <time>Kothagudem</time>
             <div>
-              <h3>Hyderabad branches</h3>
-              <p>Banjara Hills, Kukatpally, and Secunderabad. Same rate protocol at every counter.</p>
+              <h3>Andhra Pradesh and Telangana</h3>
+              <p>6-3-32/A, Near By Railway Station, Chinna Bazar Road, Kothagudem, Kothagudem-507101, Telangana.</p>
             </div>
           </li>
           <li>

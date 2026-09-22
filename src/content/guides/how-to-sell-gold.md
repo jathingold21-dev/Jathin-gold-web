@@ -12,7 +12,7 @@ Check a live 22K figure so you have a band, not a fantasy number. Weigh the lot 
 
 ## At the desk
 
-The sequence should be boring: weigh, XRF, written quote, KYC, pay. If any step happens out of sight, stop. If the quote is only verbal, stop. That is the sequence we use at the Hyderabad desk.
+The sequence should be boring: weigh, XRF, written quote, KYC, pay. If any step happens out of sight, stop. If the quote is only verbal, stop. That is the sequence we use at the Kothagudem desk. We are available in Andhra Pradesh and Telangana.
 
 ## After you accept
 

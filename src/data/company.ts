@@ -13,8 +13,10 @@ export const company = {
   phoneShort: '97000 91700',
   whatsapp: '919700091700',
   email: 'Jathingold21@gmail.com',
-  region: 'Hyderabad',
+  region: 'Andhra Pradesh and Telangana',
   state: 'Telangana',
+  address:
+    '6-3-32/A, Near By Railway Station, Chinna Bazar Road, Kothagudem, Kothagudem-507101, Telangana',
   country: 'IN',
   hoursLabel: 'Open 7 days, 9:30 AM – 7:00 PM',
   hoursSpec: 'Mo-Su 09:30-19:00',

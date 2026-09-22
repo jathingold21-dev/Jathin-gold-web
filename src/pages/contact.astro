@@ -2,13 +2,13 @@
 import Base from '../layouts/Base.astro';
 import ContactForm from '../components/ContactForm.astro';
 import { company, telUrl, whatsappUrl } from '../data/company';
-import { branches } from '../data/branches';
+import { deskAddress, branches } from '../data/branches';
 import { breadcrumbJsonLd } from '../lib/seo';
 ---
 
 <Base
   title="Contact Jathin Gold"
-  description={`Call ${company.phoneDisplay}, WhatsApp, or visit a ${company.region} branch. Free valuation, no obligation.`}
+  description={`Call ${company.phoneDisplay}, WhatsApp, or visit the Kothagudem desk. Available in Andhra Pradesh and Telangana. Free valuation, no obligation.`}
   path="/contact"
   jsonLd={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Contact', path: '/contact' }])}
 >
@@ -29,19 +29,17 @@ import { breadcrumbJsonLd } from '../lib/seo';
           <a class="contact-desk-mail" href={`mailto:${company.email}`}>{company.email}</a>
         </div>
         <div>
-          <p class="contact-desk-label">Hyderabad branches</p>
+          <p class="contact-desk-label">Available in Andhra Pradesh and Telangana</p>
           <ul class="contact-desk-branches">
-            {branches.map((b) => (
-              <li>
-                <a href={b.mapsUrl} rel="noopener">
-                  <span>
-                    <strong>{b.name}</strong>
-                    {b.area}
-                  </span>
-                  Map
-                </a>
-              </li>
-            ))}
+            <li>
+              <a href={branches[0].mapsUrl} rel="noopener">
+                <span>
+                  <strong>Kothagudem</strong>
+                  {deskAddress}
+                </span>
+                Map
+              </a>
+            </li>
           </ul>
         </div>
       </aside>

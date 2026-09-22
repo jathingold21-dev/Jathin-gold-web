@@ -3,7 +3,7 @@ export type Faq = { q: string; a: string };
 export const homeFaqCards: Faq[] = [
   {
     q: 'Where can I sell gold?',
-    a: 'At any Jathin Gold branch in Hyderabad. Walk in with ID. Weighing, XRF testing, and payment happen at the desk in front of you.',
+    a: 'At the Jathin Gold desk in Kothagudem. We are available in Andhra Pradesh and Telangana. Walk in with ID. Weighing, XRF testing, and payment happen at the desk in front of you.',
   },
   {
     q: 'Where can I sell old gold jewellery?',
@@ -11,7 +11,7 @@ export const homeFaqCards: Faq[] = [
   },
   {
     q: 'Where can I sell gold near me?',
-    a: 'See the branches page for Banjara Hills, Kukatpally, and Secunderabad, or call 97000 91700. All desks run the same protocol.',
+    a: 'The desk is at 6-3-32/A, Near By Railway Station, Chinna Bazar Road, Kothagudem, Kothagudem-507101, Telangana. We are available in Andhra Pradesh and Telangana. Call 97000 91700.',
   },
   {
     q: 'Is my gold safe during evaluation?',
@@ -33,12 +33,12 @@ export const homeFaqs: Faq[] = [
     a: 'No. Jathin Gold only buys gold, silver, and platinum from the public. We do not sell jewellery, coins, or bars.',
   },
   {
-    q: 'Where can I sell gold in Hyderabad?',
-    a: 'At any Jathin Gold branch. Evaluation, XRF testing, and payment happen at the desk in front of you. See the branches page for addresses and maps.',
+    q: 'Where can I sell gold?',
+    a: 'At the Kothagudem desk: 6-3-32/A, Near By Railway Station, Chinna Bazar Road, Kothagudem, Kothagudem-507101, Telangana. We are available in Andhra Pradesh and Telangana. Evaluation, XRF testing, and payment happen in front of you.',
   },
   {
     q: 'Is the rate on the website what I will be paid?',
-    a: 'The figures are live indicative market rates. Your payout is the branch quote after purity testing, weight, and any stone or solder deduction.',
+    a: 'The figures are live indicative market rates. Your payout is the written quote after purity testing, weight, and any stone or solder deduction.',
   },
   {
     q: 'How long does it take?',
@@ -64,8 +64,8 @@ export const goldFaqs: Faq[] = [
     a: 'Yes. Stones are not paid as gold. We either deduct their weight or, where practical, remove them in front of you and return them.',
   },
   {
-    q: 'Can I sell a small amount of gold in Hyderabad?',
-    a: 'Yes. There is no theatrical minimum. Very small lots are still tested and paid at the same protocol at any Jathin Gold branch.',
+    q: 'Can I sell a small amount of gold?',
+    a: 'Yes. There is no theatrical minimum. Very small lots are still tested and paid at the same protocol at the Kothagudem desk.',
   },
   {
     q: 'Do you deduct making charges when I sell gold?',
@@ -77,7 +77,7 @@ export const goldFaqs: Faq[] = [
   },
   {
     q: 'Is the live rate on this page what I will be paid?',
-    a: 'The figure is an indicative live market rate. Your payout is the branch quote after XRF, weight, and any stone or solder deduction.',
+    a: 'The figure is an indicative live market rate. Your payout is the written quote after XRF, weight, and any stone or solder deduction.',
   },
 ];
 
@@ -102,8 +102,8 @@ export const silverFaqs: Faq[] = [
 
 export const platinumFaqs: Faq[] = [
   {
-    q: 'Do all branches take platinum?',
-    a: 'Yes, with the same XRF protocol. Platinum (typically PT950) has a smaller local refining market than gold, so the quote may take a few extra minutes on unusual pieces. Call ahead for large lots.',
+    q: 'Do you take platinum?',
+    a: 'Yes, with the same XRF protocol at the Kothagudem desk. Platinum (typically PT950) has a smaller local refining market than gold, so the quote may take a few extra minutes on unusual pieces. Call ahead for large lots.',
   },
   {
     q: 'Is platinum paid like white gold?',
@@ -122,7 +122,7 @@ export const platinumFaqs: Faq[] = [
 export const kycFaqs: Faq[] = [
   {
     q: 'Can I sell gold without giving my name?',
-    a: 'No. KYC is mandatory. Identity is linked to the sale. This is the law, not a branch preference.',
+    a: 'No. KYC is mandatory. Identity is linked to the sale. This is the law.',
   },
   {
     q: 'How is payment made above ₹2 lakh?',

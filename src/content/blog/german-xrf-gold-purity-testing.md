@@ -12,7 +12,7 @@ robots: "index, follow"
 ogTitle: ""
 ogDescription: ""
 ogImage: "/blog/xrf-testing.jpg"
-keywords: "XRF Karatmeter, non destructive gold testing, gold purity Hyderabad"
+keywords: "XRF Karatmeter, non destructive gold testing, gold purity Kothagudem"
 focusKeyphrase: "Purity Testing"
 coverImage: "/blog/xrf-testing.jpg"
 coverAlt: "German XRF spectrometer karatmeter testing gold purity non destructively"
@@ -32,4 +32,4 @@ The detector measures these energy signatures and calculates the precise element
 2. **Transparent Readout**: The digital screen displays the exact karatage (e.g. 22K / 91.6% or 18K / 75.0%) directly in front of you.
 3. **No Obligation**: Because your jewellery remains completely intact, you are free to accept the valuation or take your pieces home without any compromise.
 
-At Jathin Gold branches across Hyderabad, every customer watches their jewellery tested live at the desk before any paperwork is signed.
+At the Jathin Gold desk in Kothagudem, every customer watches their jewellery tested live before any paperwork is signed. We are available in Andhra Pradesh and Telangana.

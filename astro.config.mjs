@@ -20,6 +20,10 @@ export default defineConfig({
   trailingSlash: 'never',
   redirects: {
     '/admin': '/admin/blog',
+    '/branches/banjara-hills': '/branches/kothagudem',
+    '/branches/kukatpally': '/branches/kothagudem',
+    '/branches/secunderabad': '/branches/kothagudem',
+    '/sell-gold-in/hyderabad': '/sell-gold-in/kothagudem',
   },
   integrations: [
     sitemap({

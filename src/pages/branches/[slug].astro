@@ -11,7 +11,7 @@ export function getStaticPaths() {
 
 const { slug } = Astro.params;
 const branch = getBranch(slug!);
-if (!branch) throw new Error('Unknown branch');
+if (!branch) throw new Error('Unknown location');
 ---
 
 <Base
@@ -22,13 +22,13 @@ if (!branch) throw new Error('Unknown branch');
     localBusinessJsonLd(branch),
     breadcrumbJsonLd([
       { name: 'Home', path: '/' },
-      { name: 'Branches', path: '/branches' },
+      { name: 'Kothagudem', path: '/branches' },
       { name: branch.name, path: `/branches/${branch.slug}` },
     ]),
   ]}
 >
   <div class="wrap page-head">
-    <p class="crumbs"><a href="/">Home</a> / <a href="/branches">Branches</a> / {branch.name}</p>
+    <p class="crumbs"><a href="/">Home</a> / <a href="/branches">Kothagudem</a> / {branch.name}</p>
     <h1>{company.name}, {branch.name}</h1>
     <p class="lede">{branch.address}. {branch.hoursLabel}. {branch.note}</p>
     <p>
@@ -41,10 +41,10 @@ if (!branch) throw new Error('Unknown branch');
       <div class="prose">
         <h2>What happens at this desk</h2>
         <p>
-          This {branch.city} branch buys gold, silver, and platinum only. Walk in with ID. Weighing and XRF are done at the counter. Payment is the same visit.
+          This Kothagudem desk buys gold, silver, and platinum only. We are available in Andhra Pradesh and Telangana. Walk in with ID. Weighing and XRF are done at the counter. Payment is the same visit.
         </p>
         <p>
-          Looking for other areas? <a href={`/sell-gold-in/${branch.citySlug}`}>Sell gold in {branch.city}</a> lists every desk in the city.
+          <a href={`/sell-gold-in/${branch.citySlug}`}>Sell gold in {branch.city}</a>.
         </p>
       </div>
       <QuoteForm />

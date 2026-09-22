@@ -21,7 +21,10 @@ export function organizationJsonLd() {
     email: company.email,
     telephone: company.phone,
     description: company.description,
-    areaServed: { '@type': 'City', name: company.region },
+    areaServed: [
+      { '@type': 'State', name: 'Andhra Pradesh' },
+      { '@type': 'State', name: 'Telangana' },
+    ],
   };
 }
 
@@ -56,7 +59,10 @@ export function localBusinessJsonLd(branch: Branch) {
     priceRange: '₹₹',
     currenciesAccepted: 'INR',
     paymentAccepted: 'Cash, UPI, Bank Transfer',
-    areaServed: branch.city,
+    areaServed: [
+      { '@type': 'State', name: 'Andhra Pradesh' },
+      { '@type': 'State', name: 'Telangana' },
+    ],
   };
 }
 
@@ -80,7 +86,10 @@ export function serviceJsonLd(opts: { name: string; path: string; description: s
     description: opts.description,
     url: absUrl(opts.path),
     provider: { '@type': 'Organization', name: company.name, url: company.site },
-    areaServed: { '@type': 'City', name: company.region },
+    areaServed: [
+      { '@type': 'State', name: 'Andhra Pradesh' },
+      { '@type': 'State', name: 'Telangana' },
+    ],
     serviceType: opts.name,
   };
 }

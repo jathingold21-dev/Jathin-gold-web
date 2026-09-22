@@ -16,7 +16,7 @@ if (!city) throw new Error('Unknown city');
 const faqs = [
   {
     q: `Where can I sell gold in ${city.name}?`,
-    a: `At Jathin Gold. We have ${city.branches.length} desk${city.branches.length > 1 ? 's' : ''} in ${city.name}. Evaluation is in front of you; payment is the same visit.`,
+    a: `At the Jathin Gold desk in Kothagudem: 6-3-32/A, Near By Railway Station, Chinna Bazar Road, Kothagudem, Kothagudem-507101, Telangana. Available in Andhra Pradesh and Telangana. Evaluation is in front of you; payment is the same visit.`,
   },
   ...homeFaqs.filter((f) => !f.q.includes('Hyderabad')),
 ];
@@ -24,7 +24,7 @@ const faqs = [
 
 <Base
   title={`Sell Gold in ${city.name} | Cash for Gold`}
-  description={`Sell gold, silver, and platinum in ${city.name}. Jathin Gold branches with XRF testing and same-visit payment. We do not sell jewellery.`}
+  description={`Sell gold, silver, and platinum in ${city.name}. Jathin Gold is available in Andhra Pradesh and Telangana, with XRF testing and same-visit payment. We do not sell jewellery.`}
   path={`/sell-gold-in/${city.slug}`}
   jsonLd={[
     serviceJsonLd({
@@ -43,7 +43,7 @@ const faqs = [
     <p class="crumbs"><a href="/">Home</a> / Sell gold in {city.name}</p>
     <h1>Sell gold in {city.name}</h1>
     <p class="lede">
-      If you are searching for a gold buyer in {city.name} — cash for old jewellery, coins, or silver — Jathin Gold is a buying desk, not a jewellery store. Walk into any of the branches below with ID.
+      If you are searching for a gold buyer in {city.name} — cash for old jewellery, coins, or silver — Jathin Gold is a buying desk, not a jewellery store. We are available in Andhra Pradesh and Telangana. Walk in at Kothagudem with ID.
     </p>
   </div>
   <section class="band band-ticket">

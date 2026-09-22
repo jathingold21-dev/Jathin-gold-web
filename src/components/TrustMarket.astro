@@ -1,17 +1,13 @@
 ---
 import type { Rates } from '../lib/rates';
 import { formatInrCompact } from '../lib/format';
-import { branches } from '../data/branches';
-import { company } from '../data/company';
-
 type Props = { rates: Rates };
 const { rates } = Astro.props;
-const branchCount = branches.length;
 ---
 
 <section class="trust-market">
   <div class="trust-strip">
-    <p class="trust-head"><span>Trusted gold buyers in Hyderabad</span></p>
+    <p class="trust-head"><span>Available in Andhra Pradesh and Telangana</span></p>
     <div class="wrap trust-grid">
       <article class="trust-item">
         <span class="trust-ico" aria-hidden="true">
@@ -24,8 +20,8 @@ const branchCount = branches.length;
         <span class="trust-ico" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none"><path d="M4 20V8l8-4 8 4v12" stroke="#fff" stroke-width="1.6"/><path d="M9 20v-6h6v6" stroke="#fff" stroke-width="1.6"/></svg>
         </span>
-        <h3>{branchCount} branches</h3>
-        <p>{company.region}</p>
+        <h3>Available in</h3>
+        <p>Andhra Pradesh &amp; Telangana</p>
       </article>
       <article class="trust-item">
         <span class="trust-ico" aria-hidden="true">
@@ -59,7 +55,7 @@ const branchCount = branches.length;
           Live market update
         </p>
         <h2 data-market-title>Today’s Gold Rate</h2>
-        <p>Indicative rate per gram. Final payout is the branch quote after XRF testing at Jathin Gold.</p>
+        <p>Indicative rate per gram. Final payout is the written quote after XRF testing at Jathin Gold.</p>
       </div>
       <div class="market-stage" data-market>
         <button type="button" class="market-arrow market-arrow-l" data-dir="-1" aria-label="Previous rate">

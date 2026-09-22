@@ -13,15 +13,15 @@ const year = new Date().getFullYear();
           <img src="/wordmark.svg" alt={company.name} width="168" height="42" class="footer-logo" />
         </a>
         <p class="footer-tagline">
-          Transparent gold, silver & platinum buying with live market rates and instant payments across Hyderabad.
+          Transparent gold, silver and platinum buying with live market rates and instant payments. Available in Andhra Pradesh and Telangana.
         </p>
         <div class="footer-address-block">
           <p class="footer-office-title">Registered Office:</p>
           <address class="footer-address">
-            Road No. 12, Banjara Hills, Hyderabad, Telangana 500034
+            {company.address}
           </address>
           <p class="footer-branches-line">
-            <strong>Branches:</strong> Banjara Hills · Kukatpally · Secunderabad
+            Available in Andhra Pradesh and Telangana
           </p>
         </div>
       </div>
@@ -43,7 +43,6 @@ const year = new Date().getFullYear();
           <p class="footer-col-title">Company</p>
           <ul class="footer-links">
             <li><a href="/about">About us</a></li>
-            <li><a href="/branches">Hyderabad branches</a></li>
             <li><a href="/gold-rate-today">Today’s live rates</a></li>
             <li><a href="/blog">Blog & updates</a></li>
           </ul>

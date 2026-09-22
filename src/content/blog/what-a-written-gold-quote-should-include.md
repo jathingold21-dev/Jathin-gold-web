@@ -12,7 +12,7 @@ robots: "index, follow"
 ogTitle: ""
 ogDescription: ""
 ogImage: ""
-keywords: "written gold quote, XRF, sell gold in Hyderabad"
+keywords: "written gold quote, XRF, sell gold in Kothagudem"
 focusKeyphrase: "Valuation Guide"
 coverImage: "/blog/written-quote.jpg"
 coverAlt: "Written gold valuation certificate with gold rings and loupe"
@@ -28,7 +28,7 @@ A written gold quote is the slip you can read before any piece leaves your hand.
 - Any deduction, named, with its amount
 - The rupee figure you will receive, and whether it is cash, UPI, or a bank transfer
 
-If a line is missing, ask for it before you say yes. Weigh, test, write the quote, then pay — that is the sequence we follow at the Hyderabad desk.
+If a line is missing, ask for it before you say yes. Weigh, test, write the quote, then pay — that is the sequence we follow at the Kothagudem desk.
 
 ## What to compare
 

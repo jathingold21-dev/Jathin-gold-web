@@ -7,15 +7,15 @@ import { allBranchesJsonLd, breadcrumbJsonLd } from '../../lib/seo';
 ---
 
 <Base
-  title={`Gold Buying Branches in ${company.region}`}
-  description={`Visit a Jathin Gold branch in ${company.region} to sell gold, silver, or platinum. Open 7 days.`}
+  title={`Visit Jathin Gold in Kothagudem`}
+  description={`Visit Jathin Gold at ${branches[0].address}. Available in Andhra Pradesh and Telangana. Open 7 days.`}
   path="/branches"
-  jsonLd={[allBranchesJsonLd(), breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Branches', path: '/branches' }])]}
+  jsonLd={[allBranchesJsonLd(), breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Kothagudem', path: '/branches' }])]}
 >
   <div class="wrap page-head">
-    <p class="crumbs"><a href="/">Home</a> / Branches</p>
-    <h1>Branches in {company.region}</h1>
-    <p class="lede">{company.hoursLabel}. Same testing protocol at every desk. Also see <a href={`/sell-gold-in/${branches[0].citySlug}`}>sell gold in {branches[0].city}</a>.</p>
+    <p class="crumbs"><a href="/">Home</a> / Kothagudem</p>
+    <h1>Kothagudem</h1>
+    <p class="lede">{branches[0].address}. {company.hoursLabel}. Available in Andhra Pradesh and Telangana.</p>
   </div>
   <section class="band band-ticket">
     <div class="wrap split split-3">
