@@ -1,19 +1,70 @@
 ---
+export const prerender = false;
+
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { absUrl, blogPostingJsonLd, breadcrumbJsonLd, mediaUrl } from '../../lib/seo';
 import { formatBlogDate } from '../../lib/format';
+import { renderMarkdown } from '../../lib/markdown';
+import { cookieName, isAuthed } from '../../server/blog-auth';
+import { canReadLive } from '../../server/blog-backend';
+import { readPost as readLivePost } from '../../server/blog-github';
+import { BlogError } from '../../server/blog-store';
 
-export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  const visible = import.meta.env.DEV ? posts : posts.filter((post) => post.data.status === 'published');
-  return visible.map((post) => ({ params: { slug: post.id }, props: { post } }));
+const slug = Astro.params.slug || '';
+let live: Awaited<ReturnType<typeof readLivePost>> | null = null;
+let missing = false;
+if (canReadLive()) {
+  try {
+    live = await readLivePost(slug);
+  } catch (err) {
+    if (err instanceof BlogError && err.status === 404) missing = true;
+    else console.error(err);
+  }
+}
+const built = missing
+  ? null
+  : live
+    ? null
+    : (await getCollection('blog')).find((entry) => entry.id === slug) ?? null;
+if (missing || (!live && !built)) {
+  return new Response('<!doctype html><title>Not found</title><p>No page here. <a href="/blog">Blog</a></p>', {
+    status: 404,
+    headers: { 'content-type': 'text/html; charset=utf-8' },
+  });
 }
 
-const { post } = Astro.props;
-const { Content } = await render(post);
-const data = post.data;
-const path = `/blog/${post.id}`;
+const data = live
+  ? live
+  : {
+      title: built!.data.title,
+      description: built!.data.description,
+      excerpt: built!.data.excerpt,
+      pubDate: built!.data.pubDate,
+      updatedDate: built!.data.updatedDate || built!.data.pubDate,
+      author: built!.data.author,
+      status: built!.data.status,
+      seoTitle: built!.data.seoTitle,
+      canonical: built!.data.canonical,
+      robots: built!.data.robots,
+      ogTitle: built!.data.ogTitle,
+      ogDescription: built!.data.ogDescription,
+      ogImage: built!.data.ogImage,
+      keywords: built!.data.keywords,
+      coverImage: built!.data.coverImage,
+      coverAlt: built!.data.coverAlt,
+    };
+const authed = isAuthed(Astro.cookies.get(cookieName())?.value);
+if (data.status !== 'published' && !authed) {
+  return new Response('<!doctype html><title>Not found</title><p>No page here. <a href="/blog">Blog</a></p>', {
+    status: 404,
+    headers: { 'content-type': 'text/html; charset=utf-8' },
+  });
+}
+
+const liveHtml = live ? renderMarkdown(live.body) : '';
+const Content = built ? (await render(built)).Content : null;
+const path = `/blog/${slug}`;
 const description = data.description || data.excerpt || data.title;
 const canonical = data.canonical || undefined;
 const pageUrl = data.canonical || absUrl(path);
@@ -80,7 +131,7 @@ const showUpdated = Boolean(data.updatedDate && data.updatedDate !== data.pubDat
     </header>
     <section class="band band-ticket">
       <div class="wrap prose">
-        <Content />
+        {liveHtml ? <div set:html={liveHtml} /> : Content && <Content />}
         <p><a href="/contact">Get a quote</a> · <a href="/sell-gold">Sell gold</a> · <a href="/calculator">Calculator</a></p>
       </div>
     </section>

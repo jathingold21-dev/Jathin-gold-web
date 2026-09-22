@@ -9,7 +9,14 @@ import {
   type RobotsOption,
 } from '../lib/blog-types';
 
-type Session = { ok: boolean; usingDefaultPassword?: boolean; devPassword?: string };
+type Session = {
+  ok: boolean;
+  usingDefaultPassword?: boolean;
+  devPassword?: string;
+  live?: boolean;
+  setup?: string;
+  publishesLive?: boolean;
+};
 type ListPost = Omit<BlogPost, 'body'>;
 type View = 'login' | 'list' | 'editor';
 
@@ -102,7 +109,7 @@ async function api<T>(path: string, init?: RequestInit): Promise<T> {
       headers: { 'Content-Type': 'application/json', ...(init?.headers || {}) },
     });
   } catch {
-    throw new ApiError(0, 'The desk saves posts while the dev server is running. Start it with npm run dev, then reload this page.');
+    throw new ApiError(0, 'The blog desk could not reach the server. Reload the page.');
   }
   const text = await response.text();
   let data: { error?: string } = {};
@@ -110,7 +117,7 @@ async function api<T>(path: string, init?: RequestInit): Promise<T> {
     try {
       data = JSON.parse(text) as { error?: string };
     } catch {
-      throw new ApiError(response.status, 'The desk saves posts while the dev server is running. Start it with npm run dev, then reload this page.');
+      throw new ApiError(response.status, 'The blog desk could not reach the server. Reload the page.');
     }
   }
   if (!response.ok) throw new ApiError(response.status, data.error || 'Request failed.');
@@ -368,12 +375,12 @@ export function mountBlogAdmin() {
     setStatus('#list-status', 'Deleting…');
     setStatus('#editor-status', 'Deleting…');
     try {
-      await api(`/api/blog/${encodeURIComponent(slug)}`, { method: 'DELETE' });
+      const removed = await api<{ pendingPublish?: boolean }>(`/api/blog/${encodeURIComponent(slug)}`, { method: 'DELETE' });
       originalSlug = '';
       snapshot = JSON.stringify(readForm());
       history.pushState({}, '', '/admin/blog');
       await renderRoute();
-      setStatus('#list-status', 'Deleted.');
+      setStatus('#list-status', removed.pendingPublish ? 'Deleted. The public page updates from the repository now.' : 'Deleted.');
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Could not delete the post.';
       setStatus('#list-status', message);
@@ -425,7 +432,7 @@ export function mountBlogAdmin() {
     saveBtn.disabled = true;
     setStatus('#editor-status', 'Saving…');
     const creating = !originalSlug;
-    void api<{ post: BlogPost }>(creating ? '/api/blog' : `/api/blog/${encodeURIComponent(originalSlug)}`, {
+    void api<{ post: BlogPost; pendingPublish?: boolean }>(creating ? '/api/blog' : `/api/blog/${encodeURIComponent(originalSlug)}`, {
       method: creating ? 'POST' : 'PUT',
       body: JSON.stringify(post),
     })
@@ -444,7 +451,7 @@ export function mountBlogAdmin() {
         history.replaceState({}, '', `/admin/blog?post=${encodeURIComponent(data.post.slug)}`);
         updatePreview();
         takeSnapshot();
-        setStatus('#editor-status', 'Saved.');
+        setStatus('#editor-status', data.pendingPublish ? 'Saved. The public page is reading this post from the repository.' : 'Saved.');
       })
       .catch((err: unknown) => {
         if (err instanceof ApiError && err.status === 401) show('login');
@@ -539,7 +546,8 @@ export function mountBlogAdmin() {
   void api<Session>('/api/admin/session')
     .then((session) => {
       const hint = must<HTMLElement>('#login-hint');
-      if (session.usingDefaultPassword && session.devPassword) {
+      if (session.setup) hint.textContent = session.setup;
+      else if (session.usingDefaultPassword && session.devPassword) {
         hint.textContent = `This dev server is using the password ${session.devPassword}. Set ADMIN_PASSWORD in .env to replace it.`;
       }
       if (!session.ok) {

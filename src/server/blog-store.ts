@@ -178,7 +178,7 @@ function quote(value: string) {
   return JSON.stringify(value);
 }
 
-function serialize(post: BlogPost) {
+export function serializePost(post: BlogPost) {
   return [
     '---',
     `title: ${quote(post.title)}`,
@@ -205,7 +205,7 @@ function serialize(post: BlogPost) {
   ].join('\n');
 }
 
-function parseFile(slug: string, raw: string): BlogPost {
+export function parseMarkdown(slug: string, raw: string): BlogPost {
   const text = raw.replace(/\r\n/g, '\n');
   if (!text.startsWith('---\n')) throw new BlogError(500, `Could not read ${slug}.`);
   const end = text.indexOf('\n---\n', 4);
@@ -233,7 +233,7 @@ function readAll(): BlogPost[] {
     .filter((name) => name.endsWith('.md'))
     .map((name) => name.slice(0, -3))
     .filter((slug) => isSlug(slug))
-    .map((slug) => parseFile(slug, fs.readFileSync(postPath(slug), 'utf8')));
+    .map((slug) => parseMarkdown(slug, fs.readFileSync(postPath(slug), 'utf8')));
   posts.sort((a, b) => b.pubDate.localeCompare(a.pubDate) || a.title.localeCompare(b.title));
   return posts;
 }
@@ -245,14 +245,14 @@ export function listPosts(): BlogListItem[] {
 export function readPost(slug: string): BlogPost {
   const file = postPath(slug);
   if (!fs.existsSync(file)) throw new BlogError(404, 'That post was not found.');
-  return parseFile(slug, fs.readFileSync(file, 'utf8'));
+  return parseMarkdown(slug, fs.readFileSync(file, 'utf8'));
 }
 
 function writePost(post: BlogPost) {
   ensureDirs();
   const dest = postPath(post.slug);
   const tmp = `${dest}.tmp`;
-  fs.writeFileSync(tmp, serialize(post), 'utf8');
+  fs.writeFileSync(tmp, serializePost(post), 'utf8');
   fs.renameSync(tmp, dest);
 }
 

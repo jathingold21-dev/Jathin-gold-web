@@ -1,12 +1,58 @@
 ---
+export const prerender = false;
+
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { blogJsonLd, breadcrumbJsonLd } from '../../lib/seo';
 import { formatBlogDate } from '../../lib/format';
+import { canReadLive } from '../../server/blog-backend';
+import { listPosts as listLivePosts } from '../../server/blog-github';
 
-const posts = (await getCollection('blog'))
-  .filter((post) => post.data.status === 'published')
-  .sort((a, b) => b.data.pubDate.localeCompare(a.data.pubDate) || a.data.title.localeCompare(b.data.title));
+type Card = {
+  id: string;
+  data: {
+    title: string;
+    pubDate: string;
+    focusKeyphrase: string;
+    coverImage: string;
+    coverAlt: string;
+  };
+};
+
+let posts: Card[] | null = null;
+if (canReadLive()) {
+  try {
+    posts = (await listLivePosts())
+      .filter((post) => post.status === 'published')
+      .map((post) => ({
+        id: post.slug,
+        data: {
+          title: post.title,
+          pubDate: post.pubDate,
+          focusKeyphrase: post.focusKeyphrase,
+          coverImage: post.coverImage,
+          coverAlt: post.coverAlt,
+        },
+      }));
+  } catch (err) {
+    console.error(err);
+  }
+}
+if (!posts) {
+  posts = (await getCollection('blog'))
+    .filter((post) => post.data.status === 'published')
+    .sort((a, b) => b.data.pubDate.localeCompare(a.data.pubDate) || a.data.title.localeCompare(b.data.title))
+    .map((post) => ({
+      id: post.id,
+      data: {
+        title: post.data.title,
+        pubDate: post.data.pubDate,
+        focusKeyphrase: post.data.focusKeyphrase,
+        coverImage: post.data.coverImage,
+        coverAlt: post.data.coverAlt,
+      },
+    }));
+}
 
 const description =
   'Insights, market trends, gold selling guides, purity testing tips, and Hyderabad updates from Jathin Gold.';
