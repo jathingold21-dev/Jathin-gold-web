@@ -1,0 +1,81 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { blogJsonLd, breadcrumbJsonLd } from '../../lib/seo';
+import { formatBlogDate } from '../../lib/format';
+
+const posts = (await getCollection('blog'))
+  .filter((post) => post.data.status === 'published')
+  .sort((a, b) => b.data.pubDate.localeCompare(a.data.pubDate) || a.data.title.localeCompare(b.data.title));
+
+const description =
+  'Insights, market trends, gold selling guides, purity testing tips, and Hyderabad updates from Jathin Gold.';
+---
+
+<Base
+  title="Insights & Gold Selling Desk Notes | Jathin Gold"
+  description={description}
+  path="/blog"
+  robots="index, follow"
+  jsonLd={[
+    breadcrumbJsonLd([
+      { name: 'Home', path: '/' },
+      { name: 'Blog', path: '/blog' },
+    ]),
+    blogJsonLd(
+      posts.map((post) => ({
+        title: post.data.title,
+        path: `/blog/${post.id}`,
+        date: `${post.data.pubDate}T00:00:00.000Z`,
+      })),
+    ),
+  ]}
+>
+  <main class="editorial-blog-page">
+    <div class="wrap">
+      <!-- Editorial Header matching reference screenshot -->
+      <header class="editorial-blog-header">
+        <p class="editorial-kicker">News & Guides</p>
+        <h1 class="editorial-main-title">Insights</h1>
+        <p class="editorial-lede">
+          Insights, market trends, gold selling guides, purity testing tips, and Hyderabad updates from Jathin Gold.
+        </p>
+      </header>
+
+      <!-- Magazine Editorial Grid matching reference screenshot -->
+      {posts.length === 0 ? (
+        <p class="blog-empty">New notes will appear here. Until then, our <a href="/guides">guides</a> cover the walk-in.</p>
+      ) : (
+        <div class="editorial-blog-grid">
+          {posts.map((post) => {
+            const category = post.data.focusKeyphrase || 'Desk Guide';
+            return (
+              <article class="editorial-card">
+                <a href={`/blog/${post.id}`} class="editorial-card-link">
+                  <span class="editorial-tag">{category}</span>
+                  {post.data.coverImage && (
+                    <div class="editorial-img-box">
+                      <img
+                        src={post.data.coverImage}
+                        alt={post.data.coverAlt || post.data.title}
+                        width="640"
+                        height="400"
+                        loading="lazy"
+                      />
+                    </div>
+                  )}
+                  <h2 class="editorial-card-title">{post.data.title}</h2>
+                  <div class="editorial-card-meta">
+                    <time datetime={post.data.pubDate}>{formatBlogDate(post.data.pubDate)}</time>
+                    <span class="meta-divider" aria-hidden="true">|</span>
+                    <span>Desk Guide</span>
+                  </div>
+                </a>
+              </article>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  </main>
+</Base>

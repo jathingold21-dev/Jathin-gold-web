@@ -1,0 +1,88 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { absUrl, blogPostingJsonLd, breadcrumbJsonLd, mediaUrl } from '../../lib/seo';
+import { formatBlogDate } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  const visible = import.meta.env.DEV ? posts : posts.filter((post) => post.data.status === 'published');
+  return visible.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const data = post.data;
+const path = `/blog/${post.id}`;
+const description = data.description || data.excerpt || data.title;
+const canonical = data.canonical || undefined;
+const pageUrl = data.canonical || absUrl(path);
+const robots = data.status === 'draft' ? 'noindex, nofollow' : data.robots;
+const image = mediaUrl(data.ogImage || data.coverImage);
+const published = `${data.pubDate}T00:00:00.000Z`;
+const modified = `${data.updatedDate || data.pubDate}T00:00:00.000Z`;
+const showUpdated = Boolean(data.updatedDate && data.updatedDate !== data.pubDate);
+---
+
+<Base
+  title={data.seoTitle || data.title}
+  description={description}
+  path={path}
+  robots={robots}
+  canonical={canonical}
+  ogTitle={data.ogTitle || undefined}
+  ogDescription={data.ogDescription || undefined}
+  ogImage={image}
+  ogType="article"
+  keywords={data.keywords || undefined}
+  published={published}
+  modified={modified}
+  jsonLd={[
+    blogPostingJsonLd({
+      title: data.title,
+      description,
+      datePublished: published,
+      dateModified: modified,
+      image,
+      keywords: data.keywords || undefined,
+      author: data.author,
+      canonical: pageUrl,
+    }),
+    breadcrumbJsonLd([
+      { name: 'Home', path: '/' },
+      { name: 'Blog', path: '/blog' },
+      { name: data.title, path },
+    ]),
+  ]}
+>
+  <article>
+    <header class="wrap blog-post">
+      <p class="crumbs"><a href="/">Home</a> / <a href="/blog">Blog</a></p>
+      {data.status === 'draft' ? <p class="blog-draft">Draft</p> : null}
+      <p class="blog-kicker">
+        <time datetime={data.pubDate}>{formatBlogDate(data.pubDate)}</time>
+        <span aria-hidden="true"> · </span>
+        {data.author}
+        {showUpdated && data.updatedDate ? (
+          <>
+            <span aria-hidden="true"> · </span>
+            Updated {formatBlogDate(data.updatedDate)}
+          </>
+        ) : null}
+      </p>
+      <h1>{data.title}</h1>
+      {description ? <p class="lede">{description}</p> : null}
+      {data.coverImage ? (
+        <figure class="blog-cover">
+          <img src={data.coverImage} alt={data.coverAlt || ''} />
+        </figure>
+      ) : null}
+    </header>
+    <section class="band band-ticket">
+      <div class="wrap prose">
+        <Content />
+        <p><a href="/contact">Get a quote</a> · <a href="/sell-gold">Sell gold</a> · <a href="/calculator">Calculator</a></p>
+      </div>
+    </section>
+  </article>
+</Base>

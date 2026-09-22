@@ -1,0 +1,121 @@
+---
+import { customerReviews } from '../data/reviews';
+---
+
+<section class="reviews-section" aria-labelledby="reviews-heading">
+  <div class="wrap">
+    <div class="reviews-header">
+      <div class="reviews-header-copy">
+        <p class="kicker">Real Customer Stories</p>
+        <h2 id="reviews-heading" class="reviews-title">
+          Our Customers’ <em>Real Stories</em>
+        </h2>
+        <p class="reviews-lead">
+          Thousands of families across Hyderabad trust Jathin Gold for honest German XRF purity testing, live market pricing, and immediate payments.
+        </p>
+      </div>
+    </div>
+
+    <div class="reviews-slider-wrap">
+      <div class="reviews-scroller" id="reviews-scroller" tabindex="0" aria-label="Customer reviews slider">
+        {customerReviews.map((rev) => (
+          <article class="review-card" id={rev.id}>
+            <div class="review-quote-badge" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.324 1.202-4.593 3.521-4.747 5.178.43-.223.953-.357 1.572-.357 2.052 0 3.752 1.637 3.752 3.655 0 2.019-1.603 3.655-3.652 3.655-1.026 0-1.848-.41-2.265-1.011zm10 0C13.553 16.227 13 15 13 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.324 1.202-4.593 3.521-4.747 5.178.43-.223.953-.357 1.572-.357 2.052 0 3.752 1.637 3.752 3.655 0 2.019-1.603 3.655-3.652 3.655-1.026 0-1.848-.41-2.265-1.011z" />
+              </svg>
+            </div>
+            <h3 class="review-headline">{rev.headline}</h3>
+            <p class="review-quote">"{rev.quote}"</p>
+            <div class="review-meta">
+              <div class="review-author">
+                <img
+                  src={rev.avatar}
+                  alt={rev.author}
+                  class="review-avatar"
+                  width="48"
+                  height="48"
+                  loading="lazy"
+                />
+                <div>
+                  <strong class="review-name">{rev.author}</strong>
+                  <span class="review-role">{rev.role}</span>
+                </div>
+              </div>
+              <div class="review-rating" aria-label={`Rating: ${rev.rating} out of 5 stars`}>
+                <div class="review-stars">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                  </svg>
+                  <span>{rev.rating.toFixed(1)}</span>
+                </div>
+                <span class="review-rating-label">Rating</span>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+
+    <div class="reviews-controls">
+      <div class="reviews-nav-arrows">
+        <button
+          type="button"
+          class="review-arrow-btn"
+          id="reviews-prev"
+          aria-label="Previous customer review"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m15 18-6-6 6-6"/>
+          </svg>
+        </button>
+        <button
+          type="button"
+          class="review-arrow-btn"
+          id="reviews-next"
+          aria-label="Next customer review"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m9 18 6-6-6-6"/>
+          </svg>
+        </button>
+      </div>
+
+      <a href="/branches" class="reviews-see-all">
+        Explore Branches
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  function initReviewsSlider() {
+    const scroller = document.getElementById('reviews-scroller');
+    const prevBtn = document.getElementById('reviews-prev');
+    const nextBtn = document.getElementById('reviews-next');
+
+    if (!scroller || !prevBtn || !nextBtn) return;
+
+    function getScrollStep() {
+      const firstCard = scroller?.querySelector<HTMLElement>('.review-card');
+      return firstCard ? firstCard.offsetWidth + 24 : 380;
+    }
+
+    prevBtn.addEventListener('click', () => {
+      scroller.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
+    });
+
+    nextBtn.addEventListener('click', () => {
+      scroller.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initReviewsSlider);
+  } else {
+    initReviewsSlider();
+  }
+</script>

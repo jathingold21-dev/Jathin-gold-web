@@ -5,6 +5,7 @@ import metals from '../assets/three-metals.jpg';
 
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const home = path === '/';
+const blog = path === '/blog' || path.startsWith('/blog/');
 const services = [
   {
     href: '/sell-gold',
@@ -38,6 +39,7 @@ const serviceOpen = services.some((s) => path === s.href);
       <nav class="desk-nav" aria-label="Primary">
         <a href="/" aria-current={path === '/' ? 'page' : undefined}>Home</a>
         <a href="/about" aria-current={path === '/about' ? 'page' : undefined}>About</a>
+        <a href="/blog" aria-current={blog ? 'page' : undefined}>Blog</a>
         <div class="nav-mega">
           <button
             class="nav-mega-trigger"
@@ -86,6 +88,7 @@ const serviceOpen = services.some((s) => path === s.href);
   <nav class="nav-panel" aria-label="Mobile">
     <a href="/">Home</a>
     <a href="/about">About</a>
+    <a href="/blog">Blog</a>
     <a href="/sell-gold">Sell Gold</a>
     <a href="/sell-silver">Sell Silver</a>
     <a href="/sell-platinum">Sell Platinum</a>

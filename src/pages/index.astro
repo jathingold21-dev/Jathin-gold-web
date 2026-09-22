@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import TrustMarket from '../components/TrustMarket.astro';
 import WhyChoose from '../components/WhyChoose.astro';
 import HomeServices from '../components/HomeServices.astro';
+import HomeReviews from '../components/HomeReviews.astro';
 import HomeFaq from '../components/HomeFaq.astro';
 import QuoteForm from '../components/QuoteForm.astro';
 import { company } from '../data/company';
@@ -31,8 +32,8 @@ const rates = await getRates();
       <div class="hero-stage">
         <div class="hero-copy">
           <p class="kicker">Trusted across Hyderabad</p>
-          <h1>Hyderabad’s Most Trusted <em>Gold Buying Company</em></h1>
-          <p class="lede">Get the highest value for your gold with transparent evaluation, live rates, and instant payment.</p>
+          <h1>Sell Your Gold Today <em>Get Its Value<br>Before You Decide</em></h1>
+          <p class="lede">Get your gold evaluated with a transparent process, clear pricing and payment after you decide to sell.</p>
           <p class="hero-link">
             <a href="/branches">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 22s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12Z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="10" r="2.2" stroke="currentColor" stroke-width="1.7"/></svg>
@@ -42,8 +43,8 @@ const rates = await getRates();
           </p>
           <ul class="trust-row">
             <li><strong>100% Transparent</strong> No hidden charges</li>
-            <li><strong>Highest Gold Rate</strong> Live market based</li>
-            <li><strong>Instant Payment</strong> Cash</li>
+            <li><strong>Market-Based Pricing</strong> Based on applicable gold market rates</li>
+            <li><strong>Fast Payment</strong> Cash, UPI or bank transfer</li>
           </ul>
         </div>
         <div class="hero-person">
@@ -70,6 +71,8 @@ const rates = await getRates();
   <WhyChoose />
 
   <HomeServices />
+
+  <HomeReviews />
 
   <HomeFaq />
 </Base>

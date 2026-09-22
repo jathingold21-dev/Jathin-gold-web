@@ -129,5 +129,3 @@ export const kycFaqs: Faq[] = [
     a: 'Cash for a single sale cannot exceed ₹2,00,000 (Income-tax Act section 269ST). The balance is paid by UPI, IMPS, or bank transfer the same visit.',
   },
 ];
-
-export const allFaqs: Faq[] = [...homeFaqs, ...goldFaqs, ...silverFaqs, ...platinumFaqs, ...kycFaqs];

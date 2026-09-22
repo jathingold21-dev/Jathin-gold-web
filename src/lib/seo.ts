@@ -98,6 +98,61 @@ export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
   };
 }
 
+export function mediaUrl(src?: string) {
+  if (!src) return absUrl('/og.jpg');
+  if (/^https?:\/\//i.test(src)) return src;
+  return absUrl(src.startsWith('/') ? src : `/${src}`);
+}
+
+export function blogJsonLd(posts: { title: string; path: string; date: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: `${company.name} blog`,
+    url: absUrl('/blog'),
+    publisher: { '@type': 'Organization', name: company.name, url: company.site },
+    blogPost: posts.map((post) => ({
+      '@type': 'BlogPosting',
+      headline: post.title,
+      url: absUrl(post.path),
+      datePublished: post.date,
+    })),
+  };
+}
+
+export function blogPostingJsonLd(opts: {
+  title: string;
+  description: string;
+  datePublished: string;
+  dateModified: string;
+  image: string;
+  keywords?: string;
+  author: string;
+  canonical: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: opts.title,
+    description: opts.description,
+    datePublished: opts.datePublished,
+    dateModified: opts.dateModified,
+    image: opts.image,
+    keywords: opts.keywords || undefined,
+    mainEntityOfPage: opts.canonical,
+    author:
+      opts.author === company.name
+        ? { '@type': 'Organization', name: opts.author, url: company.site }
+        : { '@type': 'Person', name: opts.author },
+    publisher: {
+      '@type': 'Organization',
+      name: company.name,
+      url: company.site,
+      logo: { '@type': 'ImageObject', url: absUrl('/favicon.png') },
+    },
+  };
+}
+
 export function articleJsonLd(opts: {
   title: string;
   description: string;

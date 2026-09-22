@@ -14,4 +14,4 @@ Gold, silver, platinum, and the common alloys. A 22K chain versus an 18K one. Wh
 
 It does not see through a thick plating into a copper core as well as people hope, which is why we also look, weigh, and sometimes test a second spot. Stones are not gold; they are either returned or deducted. Hollow pieces can fool a careless buyer — not if the scale and the gun are used together.
 
-If a shop takes your jewellery “to the machine inside,” you have no idea which piece came back. Our [process](/how-it-works) keeps the analyser on the counter.
+If a shop takes your jewellery “to the machine inside,” you have no idea which piece came back. We keep the analyser on the counter.

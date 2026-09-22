@@ -1,51 +1,95 @@
 ---
 import { company, telUrl, whatsappUrl } from '../data/company';
-import { branches } from '../data/branches';
+
+const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
-  <div class="wrap footer-grid">
-    <div>
-      <p class="brand-name">{company.name}</p>
-      <p>{company.tagline}</p>
-      <p><a href={telUrl}>{company.phoneDisplay}</a><br />
-        <a href={whatsappUrl()}>WhatsApp</a> · <a href={`mailto:${company.email}`}>{company.email}</a></p>
-      <p>{company.hoursLabel}</p>
+  <div class="footer-main">
+    <div class="wrap footer-main-inner">
+      <!-- Brand & Address Column -->
+      <div class="footer-brand-col">
+        <a href="/" class="footer-brand-link" aria-label={company.name}>
+          <img src="/wordmark.svg" alt={company.name} width="168" height="42" class="footer-logo" />
+        </a>
+        <p class="footer-tagline">
+          Transparent gold, silver & platinum buying with live market rates and instant payments across Hyderabad.
+        </p>
+        <div class="footer-address-block">
+          <p class="footer-office-title">Registered Office:</p>
+          <address class="footer-address">
+            Road No. 12, Banjara Hills, Hyderabad, Telangana 500034
+          </address>
+          <p class="footer-branches-line">
+            <strong>Branches:</strong> Banjara Hills · Kukatpally · Secunderabad
+          </p>
+        </div>
+      </div>
+
+      <!-- Navigation Columns -->
+      <div class="footer-nav-grid">
+        <!-- Services Column -->
+        <div class="footer-col">
+          <p class="footer-col-title">Services</p>
+          <ul class="footer-links">
+            <li><a href="/sell-silver">Sell silver</a></li>
+            <li><a href="/sell-platinum">Sell platinum</a></li>
+            <li><a href="/calculator">Gold calculator</a></li>
+          </ul>
+        </div>
+
+        <!-- Company Column -->
+        <div class="footer-col">
+          <p class="footer-col-title">Company</p>
+          <ul class="footer-links">
+            <li><a href="/about">About us</a></li>
+            <li><a href="/branches">Hyderabad branches</a></li>
+            <li><a href="/gold-rate-today">Today’s live rates</a></li>
+            <li><a href="/blog">Blog & updates</a></li>
+          </ul>
+        </div>
+
+        <!-- Direct Support Column (Pill Buttons) -->
+        <div class="footer-col footer-action-col">
+          <p class="footer-col-title">Direct Support</p>
+          <div class="footer-pill-buttons">
+            <a href={whatsappUrl()} class="footer-pill-btn" target="_blank" rel="noopener noreferrer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.23 8.23 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.24-.74-.66-1.24-1.48-1.39-1.73-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.14.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.08s.89 2.41 1.01 2.58c.13.17 1.75 2.67 4.24 3.75.59.26 1.05.41 1.41.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.59.21-1.09.15-1.19-.07-.1-.23-.17-.48-.29z"/>
+              </svg>
+              <span>WhatsApp Us</span>
+            </a>
+
+            <a href={telUrl} class="footer-pill-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+              <span>Call {company.phoneShort}</span>
+            </a>
+          </div>
+          <p class="footer-hours-note">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <span>Open 7 Days · 9:30 AM – 7:00 PM</span>
+          </p>
+        </div>
+      </div>
     </div>
-    <div>
-      <h2>Sell</h2>
-      <ul>
-        <li><a href="/sell-gold">Sell gold</a></li>
-        <li><a href="/sell-silver">Sell silver</a></li>
-        <li><a href="/sell-platinum">Sell platinum</a></li>
-        <li><a href="/sell-old-gold">Old gold</a></li>
-        <li><a href="/sell-gold-jewellery">Jewellery</a></li>
-        <li><a href="/sell-gold-coins">Coins</a></li>
-        <li><a href="/calculator">Calculator</a></li>
-      </ul>
-    </div>
-    <div>
-      <h2>Rates</h2>
-      <ul>
-        <li><a href="/gold-rate-today">Gold rate today</a></li>
-        <li><a href="/silver-rate-today">Silver rate today</a></li>
-        <li><a href="/platinum-rate-today">Platinum rate today</a></li>
-        <li><a href="/how-it-works">How it works</a></li>
-        <li><a href="/faq">FAQ</a></li>
-        <li><a href="/guides">Guides</a></li>
-      </ul>
-    </div>
-    <div>
-      <h2>Visit</h2>
-      <ul>
-        {branches.map((b) => (
-          <li><a href={`/branches/${b.slug}`}>{b.name}</a></li>
-        ))}
-        <li><a href="/contact">Contact</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/privacy">Privacy</a></li>
-        <li><a href="/terms">Terms</a></li>
-      </ul>
+  </div>
+
+  <!-- Bottom Accent Band (Matching Screenshot) -->
+  <div class="footer-bottom-bar">
+    <div class="wrap footer-bottom-inner">
+      <p class="footer-copyright">
+        © {year} {company.name}. All rights reserved.
+      </p>
+      <nav class="footer-legal-links" aria-label="Legal & Contact">
+        <a href="/terms">Terms of Service</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/contact">Contact</a>
+      </nav>
     </div>
   </div>
 </footer>
