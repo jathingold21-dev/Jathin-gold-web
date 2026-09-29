@@ -3,92 +3,291 @@ import Base from '../layouts/Base.astro';
 import { company } from '../data/company';
 import { breadcrumbJsonLd } from '../lib/seo';
 
-const years = Math.max(1, new Date().getFullYear() - company.establishedYear);
+const standards = [
+  {
+    title: 'No hidden secrets',
+    body: 'Nothing about the weight, the test, or the quote is kept from you.',
+    icon: 'eye',
+  },
+  {
+    title: 'No rushed evaluations',
+    body: 'The evaluation is never hurried. You see each step before you decide.',
+    icon: 'scale',
+  },
+  {
+    title: 'Absolute respect',
+    body: 'The person sitting across the table is treated with dignity.',
+    icon: 'person',
+  },
+];
+
+const services = [
+  {
+    href: '/sell-gold-for-cash',
+    title: 'Sell Gold for Cash',
+    body: 'Bring your gold jewellery, coins, or ornaments to us for a clear, face-to-face evaluation. Once you are comfortable with the valuation, payment is handled immediately.',
+    icon: 'coin',
+  },
+  {
+    href: '/contact',
+    title: 'Release Your Pledged Gold',
+    body: 'If your gold is currently pledged with a bank or financial institution, our team helps you settle the balance and release your family ornaments smoothly and safely.',
+    icon: 'bank',
+  },
+  {
+    href: '/sell-old-gold',
+    title: 'Old Gold Buying',
+    body: 'We evaluate old, broken or outdated gold ornaments transparently, regardless of their condition, ensuring you get fair and honest worth.',
+    icon: 'ring',
+  },
+  {
+    href: '/sell-gold',
+    title: 'Exchange Gold for Cash',
+    body: 'Turn unused ornaments into immediate funds with a straightforward explanation of every gram and calculation right in front of your eyes.',
+    icon: 'exchange',
+  },
+];
+
+const steps = [
+  {
+    title: 'Open Weighing',
+    body: 'Your ornaments are weighed on accurate, certified scales where you can see every single gram clearly.',
+  },
+  {
+    title: 'Transparent Testing',
+    body: 'Purity testing is done honestly and carefully, with every detail explained to you so you understand exactly what you own.',
+  },
+  {
+    title: 'Fair Market Pricing',
+    body: 'We calculate the final value based on live, honest market rates with no hidden deductions or confusing jargon.',
+  },
+  {
+    title: 'Your Choice First',
+    body: 'Once the evaluation is complete, the final decision is entirely yours. There is never any pressure, rush or obligation.',
+  },
+];
+
+const differences = [
+  {
+    title: '100% Transparent Evaluation',
+    body: 'Purity testing and weighing happen openly right in front of your eyes. No hidden backrooms, no guesswork and complete clarity on how your value is calculated.',
+  },
+  {
+    title: 'Respect Without Judgment',
+    body: 'We know that visiting a gold buyer often happens during stressful or tight financial moments. You will always be met with empathy, patience and complete dignity.',
+  },
+  {
+    title: 'Live, Fair Market Pricing',
+    body: 'Our valuations are strictly aligned with current market rates so you always walk away knowing you received the exact, honest worth of your gold.',
+  },
+  {
+    title: 'Instant, Flexible Payment',
+    body: 'Once you accept the valuation, your payment is processed immediately through your preferred mode with zero delays or runaround.',
+  },
+  {
+    title: 'Your Pace, Your Choice',
+    body: 'There is never any pressure or rush. You are always completely in control of your gold and your decisions.',
+  },
+];
+
+const beforeVisit = [
+  {
+    title: 'Valid Government ID',
+    body: 'Please carry a valid government-issued photo identification (such as an Aadhaar Card, PAN Card, or Voter ID) for verification and documentation purposes as per standard guidelines.',
+  },
+  {
+    title: 'Legal Ownership',
+    body: 'Ensure that the gold being brought in belongs to you or that you have the proper authorization to handle it, maintaining complete transparency from the start.',
+  },
+  {
+    title: 'Original Purchase Proof, If Available',
+    body: 'While not always mandatory, bringing original purchase bills or receipts can help speed up the verification process for newer items.',
+  },
+  {
+    title: 'Complete Clarity',
+    body: 'Our team will verify the weight and purity right in front of you and answer any questions you have before you make your final decision.',
+  },
+];
 ---
 
 <Base
   title="About Jathin Gold"
-  description="Jathin Gold is a dedicated buyer of gold, silver, and platinum, available in Andhra Pradesh and Telangana. The desk is in Kothagudem. We do not sell jewellery. XRF at the desk, same-visit payment."
+  description="Ravula SaiKrishna founded Jathin Gold so families can sell gold in the open: honest weight, clear rates, immediate payment, and respect at the table. Available in Andhra Pradesh and Telangana."
   path="/about"
   jsonLd={breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'About', path: '/about' }])}
 >
-  <section class="about-page">
+  <article class="about-page">
+    <div class="about-open">
+    <header class="about-hero">
+      <div class="wrap">
+        <p class="about-kicker">About {company.name}</p>
+        <h1>True value isn’t just measured in grams. <span>It’s measured in trust.</span></h1>
+      </div>
+    </header>
+
     <div class="wrap">
-    <div class="about-layout">
-      <article class="about-card">
-        <div class="about-photo-stage">
-          <div class="about-rings" aria-hidden="true"></div>
-          <div class="about-photo">
-            <img src="/founder.png" alt={`${company.shortName}, founder of ${company.name}`} width="832" height="1208" />
-          </div>
-          <p class="about-badge">Founder</p>
-          <p class="about-trust">
-            <span>Built on trust</span>
-            Since {company.establishedYear}
+      <section class="about-origin" aria-labelledby="about-started">
+        <div class="about-origin-photo">
+          <img
+            src="/about-founder.jpg"
+            alt="Ravula SaiKrishna, founder of Jathin Gold"
+            width="784"
+            height="1200"
+          />
+        </div>
+        <div class="about-origin-copy">
+          <p class="about-kicker">Why we started</p>
+          <h2 id="about-started">Needing financial support should never compromise your dignity.</h2>
+          <p>When our founder, Ravula SaiKrishna, observed everyday people parting with their family jewellery during tough times, he realized how often customers were made to feel small or vulnerable in traditional setups.</p>
+          <p>He wanted to build an environment rooted in absolute equality, where every customer feels empowered, heard, and treated with the highest degree of personal respect.</p>
+          <p>He built Jathin Gold on a simple belief: when someone trusts you with their family gold during a difficult hour, you don’t treat them like a transaction. You look them in the eye, show them the real weight and treat them with absolute respect.</p>
+          <p class="about-founder">
+            <strong>Ravula SaiKrishna</strong>
+            <span>Founder, {company.name}</span>
           </p>
         </div>
-        <div class="about-card-body">
-          <h2>{company.shortName}</h2>
-          <p>Dedicated gold, silver, and platinum buyer in {company.region}. The desk pays on tested metal — not on a new jewellery sale.</p>
-          <div class="about-stats">
+      </section>
+    </div>
+    </div>
+
+    <section class="about-section" data-tone="sand" aria-labelledby="about-today">
+      <div class="wrap about-split">
+        <div>
+          <p class="about-kicker">Who we are today</p>
+          <h2 id="about-today">Today, Jathin Gold has grown into a trusted name for families looking for fairness, clarity and peace of mind</h2>
+          <p>Yet, as we have grown, our core has never changed. Every single day, we still hold ourselves to that very first standard: no hidden secrets, no rushed evaluations and absolute respect for the person sitting across our table.</p>
+          <p>We aren’t just here to handle gold. We are here to be a dependable home for our community when life asks a little more of them.</p>
+        </div>
+        <aside class="about-mission" aria-labelledby="about-standard">
+          <p class="about-kicker">Every single day</p>
+          <h2 id="about-standard">Our core has never changed</h2>
+          <p>We still hold ourselves to that very first standard.</p>
+          <ul>
+            {standards.map((item) => (
+              <li>
+                <span class="about-mark" aria-hidden="true">
+                  {item.icon === 'eye' && (
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M2.5 12S6.2 6.6 12 6.6 21.5 12 21.5 12 17.8 17.4 12 17.4 2.5 12 2.5 12Z" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="2.3" stroke="currentColor" stroke-width="1.7"/></svg>
+                  )}
+                  {item.icon === 'scale' && (
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M12 4v15M8 19h8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M12 7 6.5 13h4M12 7l5.5 6h-4" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                  )}
+                  {item.icon === 'person' && (
+                    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3" stroke="currentColor" stroke-width="1.7"/><path d="M5.5 19.2c.8-3.1 3.1-4.7 6.5-4.7s5.7 1.6 6.5 4.7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                  )}
+                </span>
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section class="about-section" data-tone="ivory" aria-labelledby="about-do">
+      <div class="wrap about-split about-split-do">
+        <div>
+          <p class="about-kicker">What we do</p>
+          <h2 id="about-do">We help you manage your gold safely, clearly and with complete transparency</h2>
+          <p>When you need quick financial flexibility or want to clear out jewellery you no longer use, the process shouldn’t feel complicated or stressful.</p>
+        </div>
+        <div class="about-cards">
+          {services.map((item) => (
+            <a href={item.href}>
+              <h3>
+                <span class="about-svc-ico" aria-hidden="true">
+                  {item.icon === 'coin' && (
+                    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.7"/><path d="M12 8v8M9.7 10.1c.45-.7 1.2-1.1 2.3-1.1 1.35 0 2.2.65 2.2 1.7s-.85 1.55-2.2 1.95c-1.3.35-2.15.8-2.15 1.75 0 1 .95 1.7 2.25 1.7 1 0 1.8-.4 2.25-1.05" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+                  )}
+                  {item.icon === 'bank' && (
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M4 10.2h16M6.2 10.2V17M10 10.2V17M14 10.2V17M17.8 10.2V17M4 17h16M12 4.2 4 9.2h16L12 4.2Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                  )}
+                  {item.icon === 'ring' && (
+                    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="14" r="5" stroke="currentColor" stroke-width="1.7"/><path d="M12 9V5.2M9.6 6.6h4.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                  )}
+                  {item.icon === 'exchange' && (
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M7 8h11.2L15.4 5.2M17 16H5.8L8.6 18.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  )}
+                </span>
+                {item.title}
+              </h3>
+              <p>{item.body}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section" data-tone="wheat" aria-labelledby="about-value">
+        <div class="wrap about-split">
+          <div>
+            <p class="about-kicker">How we value your gold</p>
+            <h2 id="about-value">Every step happens openly, right in front of you</h2>
+            <p>We believe that transparency isn’t just a promise; it is something you should see with your own eyes. When you bring your gold to us, every step of the evaluation happens openly right in front of you, never behind closed doors.</p>
+          </div>
+          <ol class="about-steps">
+            {steps.map((step, i) => (
+              <li>
+                <span>{String(i + 1).padStart(2, '0')}</span>
+                <h3>{step.title}</h3>
+                <p>{step.body}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section class="about-section" data-tone="linen" aria-labelledby="about-diff">
+        <div class="wrap">
+          <p class="about-kicker">The Jathin difference</p>
+          <h2 id="about-diff">A different kind of experience</h2>
+          <p class="about-lead">Choosing where to take your gold is a big decision. We believe you deserve a place that stands by you. Here is what makes Jathin Gold a different kind of experience.</p>
+          <div class="about-diff">
+            {differences.map((item) => (
+              <article>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="about-section" data-tone="biscuit" aria-labelledby="about-trust">
+        <div class="wrap">
+          <div class="about-trust">
             <div>
-              <strong>{years}+</strong>
-              <span>Years</span>
+              <p class="about-kicker">Why trust matters to us</p>
+              <h2 id="about-trust">Gold holds the chapters of our lives</h2>
+              <p>Gold is never just an asset of convenience; it holds the chapters of our lives. It represents the quiet sacrifices of parents, the joyous celebrations of weddings and the safety net we lean on when unexpected turns arrive.</p>
+              <p>When you hand over something so deeply personal, you shouldn’t have to wonder if you are being treated fairly. You should feel secure in the knowledge that the person across the table values your trust above a quick transaction.</p>
             </div>
-            <div>
-              <strong>2</strong>
-              <span>States</span>
-            </div>
-            <div>
-              <strong>3</strong>
-              <span>Metals</span>
+            <div class="about-promise">
+              <p class="about-kicker about-kicker-brass">Our promise</p>
+              <p class="about-promise-lead">You will always be treated with honesty, transparency and deep personal respect, exactly when you need it the most.</p>
+              <p>That is why trust is everything to us at Jathin Gold. It isn’t just a word we put on a wall, it is our absolute promise.</p>
             </div>
           </div>
         </div>
-      </article>
+      </section>
 
-      <div class="about-story">
-        <p class="crumbs"><a href="/">Home</a> / About</p>
-        <h1>A Kothagudem desk for Andhra Pradesh and Telangana</h1>
-        <p>
-          {company.name} was founded in {company.establishedYear} as a dedicated precious-metal buyer. Jewellers who take your old gold often hope you walk out with a new set. Their incentive is exchange. Ours is metal. We pay, you leave, we refine.
-        </p>
-        <p>
-          The idea is simple: you should see the weight, the XRF reading, and the written quote before you decide. Too many people sell gold without knowing what they were paid for. <strong>We run the opposite desk.</strong>
-        </p>
-
-        <ol class="about-timeline">
-          <li>
-            <time>{company.establishedYear}</time>
-            <div>
-              <h3>The beginning</h3>
-              <p>A buying desk in {company.region} — gold only at first, paid the same visit after a test you can watch.</p>
-            </div>
-          </li>
-          <li>
-            <time>The protocol</time>
-            <div>
-              <h3>Nothing leaves the counter</h3>
-              <p>Calibrated scale, XRF in view, a written quote you can refuse, KYC, then cash or bank transfer.</p>
-            </div>
-          </li>
-          <li>
-            <time>Kothagudem</time>
-            <div>
-              <h3>Andhra Pradesh and Telangana</h3>
-              <p>6-3-32/A, Near By Railway Station, Chinna Bazar Road, Kothagudem, Kothagudem-507101, Telangana.</p>
-            </div>
-          </li>
-          <li>
-            <time>Today</time>
-            <div>
-              <h3>Gold, silver, and platinum</h3>
-              <p>Three metals, live indicative rates on this site, open seven days. We still do not sell jewellery.</p>
-            </div>
-          </li>
-        </ol>
-      </div>
-    </div>
-    </div>
-  </section>
+      <section class="about-section" data-tone="paper" aria-labelledby="about-visit">
+        <div class="wrap">
+          <p class="about-kicker">Before you visit</p>
+          <h2 id="about-visit">What you should know before you visit</h2>
+          <p class="about-lead">To make your experience smooth, legal and completely hassle-free, here are a few simple things to keep in mind when you visit Jathin Gold.</p>
+          <div class="about-visit">
+            {beforeVisit.map((item) => (
+              <article>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+  </article>
 </Base>

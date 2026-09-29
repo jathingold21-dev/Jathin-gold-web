@@ -2,28 +2,28 @@ export type Faq = { q: string; a: string };
 
 export const homeFaqCards: Faq[] = [
   {
-    q: 'Where can I sell gold?',
-    a: 'At the Jathin Gold desk in Kothagudem. We are available in Andhra Pradesh and Telangana. Walk in with ID. Weighing, XRF testing, and payment happen at the desk in front of you.',
+    q: 'Do I need to bring any documents when selling or releasing my gold?',
+    a: 'Yes. For safety and legal compliance, please bring a valid government-issued photo ID (such as your Aadhaar card, PAN card, or Voter ID). If you have the original purchase bill or receipt, bringing it along is helpful, though not strictly mandatory.',
   },
   {
-    q: 'Where can I sell old gold jewellery?',
-    a: 'We buy old, unused, and broken jewellery. Design does not add rupees; we pay on tested metal after stones and solder are accounted for.',
+    q: 'Will my gold be melted or damaged during the evaluation?',
+    a: "No. We use modern, non-destructive testing methods (such as advanced purity testing equipment) to check your gold's purity right in front of your eyes without melting or damaging your ornaments.",
   },
   {
-    q: 'Where can I sell gold near me?',
-    a: 'The desk is at 6-3-32/A, Near By Railway Station, Chinna Bazar Road, Kothagudem, Kothagudem-507101, Telangana. We are available in Andhra Pradesh and Telangana. Call 97000 91700.',
+    q: 'How is the final value of my gold calculated?',
+    a: 'Our valuations are strictly aligned with live, current market rates. We weigh your gold on certified scales and calculate the exact worth based on its purity, ensuring complete transparency with zero hidden deductions.',
   },
   {
-    q: 'Is my gold safe during evaluation?',
-    a: 'Testing stays on the counter. Nothing goes to a back room. You can refuse the quote and take the metal home.',
+    q: 'Can you help me release my gold if it is currently pledged with a bank or financial institution?',
+    a: 'Yes. Our team assists you through the process of settling your outstanding balance and releasing your family ornaments smoothly, securely and transparently.',
   },
   {
-    q: 'Do you deduct any charges?',
-    a: 'We do not deduct making charges. Stones and non-gold parts come off the payable weight. Any deduction is written on the quote before you accept.',
+    q: 'Is there any obligation to sell once the evaluation is done?',
+    a: 'Not at all. The final decision is entirely yours. There is never any rush, pressure or fee just for getting your gold evaluated.',
   },
   {
-    q: 'Do I need to bring documents?',
-    a: 'Bring a photo ID (Aadhaar is typical). PAN is required when a single sale is ₹2,00,000 or more. Purchase bills help but are not mandatory.',
+    q: 'How quickly will I receive my payment?',
+    a: 'Once you accept our valuation, payment is processed and handed over immediately through your preferred payment mode (cash or bank transfer) with zero delays.',
   },
 ];
 
