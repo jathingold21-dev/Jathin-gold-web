@@ -17,7 +17,7 @@ const rates = await getRates();
   <div class="wrap page-head">
     <p class="crumbs"><a href="/">Home</a> / Platinum rate today</p>
     <h1>Platinum rate today</h1>
-    <p class="lede">Indicative per gram. Snapshot {formatTime(rates.fetchedAt)} IST. PT950 is priced from this fine rate after the XRF reading.</p>
+    <p class="lede">Indicative per gram. Updated <span data-updated>{formatTime(rates.fetchedAt)}</span> IST. PT950 is priced from this fine rate after the XRF reading.</p>
   </div>
   <section class="band">
     <div class="wrap">
@@ -26,7 +26,7 @@ const rates = await getRates();
           <thead><tr><th>Weight</th><th>Indicative</th></tr></thead>
           <tbody>
             <tr><td>1 g</td><td class="num" data-k="platinum">{formatInrCompact(rates.platinum.perGram)}</td></tr>
-            <tr><td>10 g</td><td class="num">{formatInrCompact(rates.platinum.perGram * 10)}</td></tr>
+            <tr><td>10 g</td><td class="num" data-k="platinum" data-mult="10">{formatInrCompact(rates.platinum.perGram * 10)}</td></tr>
           </tbody>
         </table>
       </div>

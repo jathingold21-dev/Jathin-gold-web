@@ -11,7 +11,7 @@ const { rates } = Astro.props;
   <p class="rate-label">Gold, per gram</p>
   <p class="rate-num" data-k="gold22">{formatInrCompact(rates.gold.perGram22k)}</p>
   <p class="rate-meta">
-    Updated {formatTime(rates.fetchedAt)} IST · not a guaranteed payout ·
+    Updated <span data-updated>{formatTime(rates.fetchedAt)}</span> IST · not a guaranteed payout ·
     <a href="/gold-rate-today">full table</a>
   </p>
   <div class="rate-split">

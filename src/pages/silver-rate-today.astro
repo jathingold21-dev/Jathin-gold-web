@@ -17,7 +17,7 @@ const rates = await getRates();
   <div class="wrap page-head">
     <p class="crumbs"><a href="/">Home</a> / Silver rate today</p>
     <h1>Silver rate today</h1>
-    <p class="lede">Indicative fine silver, per gram. Snapshot {formatTime(rates.fetchedAt)} IST.</p>
+    <p class="lede">Indicative fine silver, per gram. Updated <span data-updated>{formatTime(rates.fetchedAt)}</span> IST.</p>
   </div>
   <section class="band">
     <div class="wrap">
@@ -26,9 +26,9 @@ const rates = await getRates();
           <thead><tr><th>Weight</th><th>Indicative</th></tr></thead>
           <tbody>
             <tr><td>1 g</td><td class="num" data-k="silver">{formatInrCompact(rates.silver.perGram)}</td></tr>
-            <tr><td>10 g</td><td class="num">{formatInrCompact(rates.silver.perGram * 10)}</td></tr>
-            <tr><td>100 g</td><td class="num">{formatInrCompact(rates.silver.perGram * 100)}</td></tr>
-            <tr><td>1 kg</td><td class="num">{formatInrCompact(rates.silver.perGram * 1000)}</td></tr>
+            <tr><td>10 g</td><td class="num" data-k="silver" data-mult="10">{formatInrCompact(rates.silver.perGram * 10)}</td></tr>
+            <tr><td>100 g</td><td class="num" data-k="silver" data-mult="100">{formatInrCompact(rates.silver.perGram * 100)}</td></tr>
+            <tr><td>1 kg</td><td class="num" data-k="silver" data-mult="1000">{formatInrCompact(rates.silver.perGram * 1000)}</td></tr>
           </tbody>
         </table>
       </div>

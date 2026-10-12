@@ -25,7 +25,7 @@ const rows = [
     <h1>Gold rate today</h1>
     <p class="lede">
       Indicative per gram, converted from live international spot with an India landing factor, or from IBJA when an API key is set. This is not the final buy price.
-      Last build snapshot: {formatTime(rates.fetchedAt)} IST.
+      Updated <span data-updated>{formatTime(rates.fetchedAt)}</span> IST.
     </p>
   </div>
   <section class="band">
@@ -40,13 +40,13 @@ const rows = [
               <tr>
                 <td>{r.k}</td>
                 <td class="num" data-k={r.key}>{formatInrCompact(r.g1)}</td>
-                <td class="num">{formatInrCompact(r.g10)}</td>
+                <td class="num" data-k={r.key} data-mult="10">{formatInrCompact(r.g10)}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <p class="notice">10g column uses the snapshot rate and does not live-update. Use the calculator for other weights.</p>
+      <p class="notice">Figures refresh from the live rate. The branch quote after XRF is the payout.</p>
       <p>
         <a href="/silver-rate-today">Silver</a> · <a href="/platinum-rate-today">Platinum</a> · <a href="/sell-gold">Sell gold</a>
       </p>
