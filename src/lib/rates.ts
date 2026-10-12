@@ -8,9 +8,9 @@ export type { MetalQuote, Rates } from './rates-core';
 export { fetchPublicSpot, GOLD_18K, GOLD_22K, TROY_OZ_GRAMS } from './rates-core';
 
 const FALLBACK: Rates = {
-  gold: metalFromInrPerGram(13420),
-  silver: metalFromInrPerGram(205, false),
-  platinum: metalFromInrPerGram(5570, false),
+  gold: metalFromInrPerGram(15098),
+  silver: metalFromInrPerGram(245, false),
+  platinum: metalFromInrPerGram(5196, false),
   inrPerUsd: 96,
   fetchedAt: new Date().toISOString(),
   source: 'fallback',

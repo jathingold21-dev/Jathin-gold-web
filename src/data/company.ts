@@ -22,11 +22,14 @@ export const company = {
   hoursSpec: 'Mo-Su 09:30-19:00',
   establishedYear: 2018,
   /**
-   * Applied only when quoting from international spot (not IBJA).
-   * Indian bullion trades above LBMA because of import duty and local premium.
-   * Tune after comparing a branch quote to the on-screen 22K figure.
+   * International spot, converted to INR per gram, sits below the Hyderabad
+   * retail quote. These factors were set on 12 Oct 2026 against Goodreturns:
+   * 24K ₹15,098, silver ₹245/g, platinum ₹5,196/g. They cover duty and the
+   * local premium. They do not add GST.
    */
-  indiaLandingFactor: 1.12,
+  goldLandingFactor: 1.1593,
+  silverLandingFactor: 1.2908,
+  platinumLandingFactor: 0.9816,
 } as const;
 
 export const whatsappUrl = (text?: string) => {

@@ -1,7 +1,8 @@
 import { company } from '../data/company';
 
 export const TROY_OZ_GRAMS = 31.1034768;
-export const GOLD_22K = 0.916;
+/** 22 karat is 22/24. Goodreturns Hyderabad prices 22K from the rounded 24K rate this way. */
+export const GOLD_22K = 22 / 24;
 export const GOLD_18K = 0.75;
 
 export type MetalQuote = {
@@ -22,11 +23,12 @@ export type Rates = {
 };
 
 export function metalFromInrPerGram(finePerGram: number, applyKarat = true): MetalQuote {
+  const fine = applyKarat ? Math.round(finePerGram) : finePerGram;
   return {
-    perGram: finePerGram,
-    perGram24k: finePerGram,
-    perGram22k: applyKarat ? finePerGram * GOLD_22K : finePerGram,
-    perGram18k: applyKarat ? finePerGram * GOLD_18K : finePerGram,
+    perGram: fine,
+    perGram24k: fine,
+    perGram22k: applyKarat ? fine * GOLD_22K : finePerGram,
+    perGram18k: applyKarat ? fine * GOLD_18K : finePerGram,
   };
 }
 
@@ -48,13 +50,12 @@ export async function fetchPublicSpot(): Promise<Rates> {
   const inr = Number(fx?.rates?.INR);
   if (!inr) throw new Error('FX INR missing');
 
-  const factor = company.indiaLandingFactor;
   const toInrGram = (usdPerOz: number, landing: number) =>
     ((usdPerOz * inr) / TROY_OZ_GRAMS) * landing;
 
-  const goldG = toInrGram(Number(xau.price), factor);
-  const silverG = toInrGram(Number(xag.price), 1);
-  const platG = toInrGram(Number(xpt.price), 1);
+  const goldG = toInrGram(Number(xau.price), company.goldLandingFactor);
+  const silverG = toInrGram(Number(xag.price), company.silverLandingFactor);
+  const platG = toInrGram(Number(xpt.price), company.platinumLandingFactor);
 
   if (![goldG, silverG, platG].every((n) => Number.isFinite(n) && n > 0)) {
     throw new Error('Spot parse failed');
